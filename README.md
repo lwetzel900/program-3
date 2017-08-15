@@ -2,9 +2,9 @@
 
 | Section                | Score | Description                                                                                                                       |
 |------------------------|-------|-----------------------------------------------------------------------------------------------------------------------------------|
-| MVC pattern View       | 10    | onlypresents values with little to no logic done                                                                                  |
-| MVC pattern Controller | 15    | calls functions from the model, creates and sets variables and directs to the appropriate view                                    |
-| MVC pattern Model      | 15    | broken up into functions in separate php files from the controller, takes care of all db calls                                    |
+| MVC pattern View       | 10    | Only presents values with little to no logic done                                                                                  |
+| MVC pattern Controller | 15    | Calls functions from the model, creates and sets variables and directs to the appropriate view                                    |
+| MVC pattern Model      | 15    | Broken up into functions in separate php files from the controller, takes care of all db calls                                    |
 | Visual Design          | 5     | Looks like a real website : “I know it when I see it.”                                                                            |
 | Database Design        | 5     | DB named after you git repo: program3-YOURGITID . At least two tables with one relationship between them                          |
 | Database Data          | 5     | Contains enough sample data to properly demonstrate your features                                                                 |
