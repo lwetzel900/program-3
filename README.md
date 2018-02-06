@@ -2,7 +2,7 @@
 
 | Section                | Score | Description                                                                                                                       |
 |------------------------|-------|-----------------------------------------------------------------------------------------------------------------------------------|
-| MVC pattern View       | 10    | Presentation layer, displays logic only                                                                                   |
+| MVC pattern View       | 10    | Presentation layer, display logic only                                                                                   |
 | MVC pattern Controller | 15    | Gets data from requests, calls functions from the model, creates and sets variables and directs to the appropriate view                                    |
 | MVC pattern Model      | 15    | Broken up into classes and functions in php files separate from the controller, takes care of all db calls, contains at least one class.                                      |
 | Visual Design          | 5     | Looks like a real website : “I know it when I see it.”                                                                            |
