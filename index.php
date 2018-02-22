@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <?php
 
+//will be doing controller stuff here
+
+
 //1525 Program 3
 
 //The best way to get a project done faster is to start sooner. -Jim Highsmith
