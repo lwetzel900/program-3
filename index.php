@@ -1,3 +1,5 @@
+<?php include ('view/header.php');?>
+    
 <!DOCTYPE html>
 <?php
 
@@ -12,3 +14,5 @@
 
 echo 'go get it';
 ?>
+<?php include ('view/footer.php');?>
+    

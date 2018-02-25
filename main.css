@@ -1,0 +1,27 @@
+
+/* 
+    Created on : Feb 25, 2018, 9:43:08 AM
+    Author     : lwetz
+*/
+header {
+    border-bottom: 2px solid black;
+    padding: .5em 0;
+    
+}
+header img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+header p{
+    text-align: center;
+}
+footer {
+    clear: both;
+    border-top: 2px solid black;
+}
+footer p {
+    text-align: right;
+    font-size: 80%;
+}
+
