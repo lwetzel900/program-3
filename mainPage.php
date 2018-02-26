@@ -1,8 +1,8 @@
-<?php include '/view/header.php';?>
-    <body>
-        <?php
-        // put your code here
-        ?>
-    </body>
-    <?php include '/view/footer.php'; ?>
+<?php include '/view/header.php'; ?>
+<main>
+    <?php
+    // put your code here
+    ?>
+</main>
+<?php include '/view/footer.php'; ?>
 

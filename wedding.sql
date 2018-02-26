@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2018 at 10:21 PM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.1
+-- Generation Time: Feb 26, 2018 at 05:16 AM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -26,14 +26,42 @@ USE `wedding`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Table structure for table `services`
 --
 
-CREATE TABLE `products` (
-  `productID` int(11) NOT NULL,
-  `description` varchar(250) NOT NULL,
-  `price` decimal(10,0) NOT NULL,
-  `pic` varchar(50) DEFAULT NULL
+CREATE TABLE `services` (
+  `serviceID` int(11) NOT NULL,
+  `serviceType` varchar(50) NOT NULL,
+  `serviceDescription` varchar(225) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `userID` int(11) NOT NULL,
+  `fName` varchar(15) NOT NULL,
+  `lName` varchar(15) NOT NULL,
+  `weddingPartyName` varchar(15) NOT NULL,
+  `address` varchar(15) NOT NULL,
+  `zip` int(5) NOT NULL,
+  `phone` varchar(13) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `venue`
+--
+
+CREATE TABLE `venue` (
+  `venueID` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `city` int(11) NOT NULL,
+  `state` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -41,20 +69,44 @@ CREATE TABLE `products` (
 --
 
 --
--- Indexes for table `products`
+-- Indexes for table `services`
 --
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`productID`);
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`serviceID`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`userID`);
+
+--
+-- Indexes for table `venue`
+--
+ALTER TABLE `venue`
+  ADD PRIMARY KEY (`venueID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT for table `services`
 --
-ALTER TABLE `products`
-  MODIFY `productID` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `services`
+  MODIFY `serviceID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `venue`
+--
+ALTER TABLE `venue`
+  MODIFY `venueID` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
