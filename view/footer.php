@@ -5,6 +5,7 @@
         &copy; <?php echo date("Y"); ?> Summerstar Creations
     </p>
 </footer>
+
 </body>
 </html>
 

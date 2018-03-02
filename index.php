@@ -1,18 +1,20 @@
-<?php include ('view/header.php');?>
-    
-<!DOCTYPE html>
-<?php
+<?php include ('view/header.php'); ?>
 
-//will be doing controller stuff here
+<main>
+<p>Let me introduce myself! My name is Summer Rose!</p>
 
+<p>Summerstar Creations, LLC is currently based out of Sidney, Iowa 
+    and provides Event Planning, Coordinating and Decorating Services. 
+    I have been happily married for 13 years and we have two very active 
+    children! I have an Associates in Business Specializing in Event 
+    and Meeting Management, graduating among the top of my class.</p>
 
-//1525 Program 3
+<p>I love everything to do with planning and decorating for events, 
+    whether it is for a wedding, reception, birthday, 
+    graduation or other life event! I have been doing weddings for many years!  
+    I'm happy to do as much or as little as you would like. 
+    Check out the 'Services Provided' page and my 
+    'Gallery' page to see what are some of the things we have to offer!</p>
+</main>
 
-//The best way to get a project done faster is to start sooner. -Jim Highsmith
-
-//The first 90 percent of the code accounts for the first 90 percent of the development time. The remaining 10 percent of the code accounts for the other 90 percent of the development time. -Tom Cargill
-
-echo 'go get it';
-?>
-<?php include ('view/footer.php');?>
-    
+<?php include ('view/footer.php'); 

@@ -3,8 +3,7 @@
 <!-- the head section -->
 <head>
     <title>Summerstar Creations</title>
-    <link rel="stylesheet" type="text/css"
-          href="main.css" />
+    <link rel="stylesheet" type="text/css" href="main.css" >
 </head>
 
 <!-- the body section -->
