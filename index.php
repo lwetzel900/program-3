@@ -1,4 +1,4 @@
-<?php include ('view/header.php'); ?>
+<?php include 'view/header.php'; ?>
 
 <main>
 <p>Let me introduce myself! My name is Summer Rose!</p>
@@ -15,6 +15,15 @@
     I'm happy to do as much or as little as you would like. 
     Check out the 'Services Provided' page and my 
     'Gallery' page to see what are some of the things we have to offer!</p>
+
+<ul>
+        <li>
+            <a href="user">User</a>
+        </li>
+        <li>
+            <a href="admin_home.php">Admin</a>
+        </li>
+    </ul>
 </main>
 
-<?php include ('view/footer.php'); 
+<?php include 'view/footer.php'; 
