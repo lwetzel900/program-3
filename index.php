@@ -18,7 +18,7 @@
 
 <ul>
         <li>
-            <a href="user">User</a>
+            <a href="user_home.php">User</a>
         </li>
         <li>
             <a href="admin_home.php">Admin</a>
