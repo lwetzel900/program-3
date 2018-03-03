@@ -1,29 +1,53 @@
-<?php include 'view/header.php'; ?>
+<?php
+//some of this taken from group project
+//session_start();
+require_once('database.php');
 
-<main>
-<p>Let me introduce myself! My name is Summer Rose!</p>
+$action = filter_input(INPUT_POST, 'action');
+if ($action === NULL) {
+    $action = filter_input(INPUT_GET, 'action');
+    if ($action === NULL) {
+        // profile will check to see if the user is logged in and send
+        // them to the profile if they are and the login page if not.
+        $action = 'main';
+    }
+}
 
-<p>Summerstar Creations, LLC is currently based out of Sidney, Iowa 
-    and provides Event Planning, Coordinating and Decorating Services. 
-    I have been happily married for 13 years and we have two very active 
-    children! I have an Associates in Business Specializing in Event 
-    and Meeting Management, graduating among the top of my class.</p>
-
-<p>I love everything to do with planning and decorating for events, 
-    whether it is for a wedding, reception, birthday, 
-    graduation or other life event! I have been doing weddings for many years!  
-    I'm happy to do as much or as little as you would like. 
-    Check out the 'Services Provided' page and my 
-    'Gallery' page to see what are some of the things we have to offer!</p>
-
-<ul>
-        <li>
-            <a href="user_home.php">User</a>
-        </li>
-        <li>
-            <a href="admin_home.php">Admin</a>
-        </li>
-    </ul>
-</main>
-
-<?php include 'view/footer.php'; 
+switch ($action) {
+    //main action
+    case 'main':
+        include ('mainPage.php');
+        break;
+    //registration
+    case 'register':
+        $firstName = "";
+        $lastName = "";
+        $email = "";
+        $address = "";
+        $city = "";
+        $zip = "";
+        $phone = "";
+        $password = "";
+        include('registration.php');
+        break;
+    case 'addUser':
+        $firstName = filter_input(INPUT_POST, 'firstName');
+        $lastName = filter_input(INPUT_POST, 'lastName');
+        $email = filter_input(INPUT_POST, 'email');
+        $address = filter_input(INPUT_POST, 'address');
+        $city = filter_input(INPUT_POST, 'city');
+        $zip = filter_input(INPUT_POST, 'zip');
+        $phone = filter_input(INPUT_POST, 'phone');
+        $password = filter_input(INPUT_POST, 'password');
+        insertUser($firstName, $lastName, $email, $address, $city, $zip, $phone, $password);
+        exit();
+        break;
+    //user views
+    case 'user':
+        include ('user_home.php');
+        break;
+//admin views
+    case 'admin':
+        include ('admin_home.php');
+        break;
+};

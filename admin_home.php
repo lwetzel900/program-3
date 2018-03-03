@@ -3,7 +3,7 @@
     <br><br>
   <form action="" method="post">
             <!--for the control-->
-            <input type="hidden" name="action" value="admin_home">
+            <input type="hidden" name="action" value="admin">
 
             <label>User Name</label>
             <input type="text" name="userName"> <br>

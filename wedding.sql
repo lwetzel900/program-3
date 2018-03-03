@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2018 at 05:16 AM
+-- Generation Time: Mar 03, 2018 at 10:45 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 
 --
 -- Database: `wedding`
+--
+Drop DATABASE IF EXISTS `wedding`;
 --
 CREATE DATABASE IF NOT EXISTS `wedding` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `wedding`;
@@ -45,10 +47,12 @@ CREATE TABLE `users` (
   `userID` int(11) NOT NULL,
   `fName` varchar(15) NOT NULL,
   `lName` varchar(15) NOT NULL,
-  `weddingPartyName` varchar(15) NOT NULL,
+  `email` varchar(30) NOT NULL,
   `address` varchar(15) NOT NULL,
+  `city` varchar(15) NOT NULL,
   `zip` int(5) NOT NULL,
-  `phone` varchar(13) NOT NULL
+  `phone` varchar(13) NOT NULL,
+  `password` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -78,7 +82,8 @@ ALTER TABLE `services`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`userID`);
+  ADD PRIMARY KEY (`userID`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `venue`
