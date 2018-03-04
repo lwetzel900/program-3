@@ -1,6 +1,7 @@
 /* 
     Created on : Feb 25, 2018, 9:43:08 AM
     Author     : Loren Wetzel
+most of these are taken from programs or book apps
 */
 html{
     background-color: darksalmon;
@@ -14,13 +15,13 @@ body {
     border: 1px solid black;
 }
 main {
-    
+
 }
 
 header {
     border-bottom: 2px solid black;
     padding: .5em 0;
-    
+
 }
 header img{
     display: block;
@@ -40,4 +41,31 @@ footer a {
 footer p {
     text-align: right;
     font-size: 80%;
+}
+br{
+    clear: left;
+}
+form {
+    margin: 0;
+}
+#aligned {
+    margin: .5em 0 2em;
+}
+#aligned label {
+    float: left;
+    width: 8em;
+    margin-top: .25em;
+    margin-right: 1em;
+    margin-bottom: .5em;
+}
+#aligned input {
+    float: left;
+    margin-bottom: .5em;
+}
+#aligned input[text] {
+    width: 15em;
+}
+#aligned .message {
+    margin-left: .5em;
+    width: 15em;
 }

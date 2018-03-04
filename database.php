@@ -13,7 +13,7 @@ try {
     //Displays the exception and keeps on rolling, uncomment the exit if you want it to halt instead
     exit();
 }
-
+//user database functions
 //insert user into table
 
 function insertUser($fName, $lName, $email, $address, $city, $zip, $phone, $password) {
@@ -55,3 +55,6 @@ function getUserByID($email) {
 
     return $results;
 }
+
+//admin functions
+
