@@ -69,7 +69,44 @@ switch ($action) {
         $galleryImages = getAllImages();
         include ('adminWork.php');
         break;
-    //image views and actions
+//venue views
+    case 'venueUpdate':
+        $allVenues = getAllVenues();
+        include('venueUpdate.php');
+        break;
+    case 'deleteVenue':
+        $venueID = filter_input(INPUT_POST, 'venueID');
+        deleteVenue($venueID);
+        header("Location: ?action=venueUpdate");
+        break;
+    case 'venueAdd':
+        $vName = filter_input(INPUT_POST, 'name');
+        $vCity = filter_input(INPUT_POST, 'city');
+        $vState = filter_input(INPUT_POST, 'state');
+        //$vPic = filter_input(INPUT_POST, 'pic');
+        $vPic = "default";
+        insertVenue($vName, $vCity, $vState, $vPic);
+        header("Location: ?action=venueUpdate");
+        break;
+//service views
+    case 'servicesUpdate':
+        $allServices = getAllServices();
+        include('serviceUpdate.php');
+        break;
+    case 'deleteService':
+        $serviceID = filter_input(INPUT_POST, 'serviceID');
+        deleteService($serviceID);
+        header("Location: ?action=servicesUpdate");
+        break;
+    case 'serviceAdd':
+        $sType = filter_input(INPUT_POST, 'type');
+        $sDescript = filter_input(INPUT_POST, 'description');
+        //$sPic = filter_input(INPUT_POST, 'pic');
+        $sPic = "default";
+        insertServices($sType, $sDescript, $sPic);
+        header("Location: ?action=servicesUpdate");
+        break;
+//image views and actions
     case 'uploadImage':
         //taken from moodle
         if (isset($_FILES['image'])) {

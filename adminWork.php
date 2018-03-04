@@ -4,14 +4,14 @@
     <br><br>
     <table>
         <tr>
-            <th>ID</th>
+            <!--<th>ID</th>-->
             <th>Picture</th>
             <th>&nbsp;</th>
         </tr>
 
         <?php foreach ($galleryImages as $pic) : ?>
             <tr>
-                <td><?php echo htmlspecialchars($pic['imageID']) ?></td>
+                <!--<td><?php echo htmlspecialchars($pic['imageID']) ?></td>-->
                 <td><image src="<?php echo htmlspecialchars($pic['galleryImages']); ?>" height="120" width="180"</td>
 
                 <td><form action="." method="post">
@@ -25,14 +25,16 @@
                     </form></td>
             </tr>
         <?php endforeach; ?>
-    </table>
+    </table><br>
+    <p>Upload images to general gallery</p>
     <!--taken from moodle-->
     <form action="" method="POST" enctype="multipart/form-data" id="aligned">
         <input type="hidden" name="action" value="uploadImage"/>
         <input type="file" name="image" /><br>
         <input type="submit"/>
     </form>
-    <br><br>
+    <br>
+    <p>Update <a href=".?action=venueUpdate">Venues</a> or update <a href=".?action=servicesUpdate">Services Provided</a></p>
 </main>
 
 <?php include 'view/footer.php'; ?>

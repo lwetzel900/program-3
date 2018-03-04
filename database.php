@@ -13,9 +13,11 @@ try {
     //Displays the exception and keeps on rolling, uncomment the exit if you want it to halt instead
     exit();
 }
-//user database functions
-//insert user into table
 
+//user database functions
+
+
+//insert user into table
 function insertUser($fName, $lName, $email, $address, $city, $zip, $phone, $password) {
     global $db;
 
@@ -55,22 +57,23 @@ function getUserByID($email) {
 
     return $results;
 }
+
 function getAllUsers() {
     global $db;
 
-    $query = "select * from users
-                    (fName, lName, email, address, city, zip, phone) 
-                    VALUES 
-                    (:fNamePlace, :lNamePlace, :emailPlace, :addressPlace, :cityPlace, :zipPlace, :phonePlace)";
+    $query = "select * from users";
+//                    (fName, lName, email, address, city, zip, phone) 
+//                    VALUES 
+//                    (:fNamePlace, :lNamePlace, :emailPlace, :addressPlace, :cityPlace, :zipPlace, :phonePlace)";
 
     $statement = $db->prepare($query);
-    $statement->bindValue(':fNamePlace', $fName);
-    $statement->bindValue(':lNamePlace', $lName);
-    $statement->bindValue(':emailPlace', $email);
-    $statement->bindValue(':addressPlace', $address);
-    $statement->bindValue(':cityPlace', $city);
-    $statement->bindValue(':zipPlace', $zip);
-    $statement->bindValue(':phonePlace', $phone);
+//    $statement->bindValue(':fNamePlace', $fName);
+//    $statement->bindValue(':lNamePlace', $lName);
+//    $statement->bindValue(':emailPlace', $email);
+//    $statement->bindValue(':addressPlace', $address);
+//    $statement->bindValue(':cityPlace', $city);
+//    $statement->bindValue(':zipPlace', $zip);
+//    $statement->bindValue(':phonePlace', $phone);
 
     $statement->execute();
     $results = $statement->fetchAll();
@@ -80,13 +83,37 @@ function getAllUsers() {
 }
 
 //admin functions
+
+
+//venue functions
 function getAllVenues() {
     global $db;
 
-    $query = "select * from venue
+    $query = "select * from venue";
+//                    (name, city, state, venuePic) 
+//                    VALUES 
+//                    (:mamePlace, :cityPlace, :statePlace, :picPlace)";
+
+    $statement = $db->prepare($query);
+//    $statement->bindValue(':namePlace', $name);
+//    $statement->bindValue(':cityPlace', $city);
+//    $statement->bindValue(':statePlace', $state);
+//    $statement->bindValue(':picPlace', $venuePic);
+
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $results;
+}
+
+function insertVenue($name, $city, $state, $venuePic) {
+    global $db;
+
+    $query = "insert into venue
                     (name, city, state, venuePic) 
                     VALUES 
-                    (:mamePlace, :cityPlace, :statePlace, :picPlace)";
+                    (:namePlace, :cityPlace, :statePlace, :picPlace)";
 
     $statement = $db->prepare($query);
     $statement->bindValue(':namePlace', $name);
@@ -95,15 +122,50 @@ function getAllVenues() {
     $statement->bindValue(':picPlace', $venuePic);
 
     $statement->execute();
+    //$imageId = $db->lastInsertId();
+    $statement->closeCursor();
+
+    //return $imageId;
+}
+
+function deleteVenue($venueID) {
+    global $db;
+
+    $query = 'DELETE FROM venue
+              WHERE venueID = :idPlace';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':idPlace', $venueID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+
+//services functions
+function getAllServices() {
+    global $db;
+
+    $query = "select * from services";
+//                    (serviceType, serviceDescription, servicePic) 
+//                    VALUES 
+//                    (:typePlace, :descriptPlace, :picPlace)";
+
+    $statement = $db->prepare($query);
+//    $statement->bindValue(':typePlace', $serviceType);
+//    $statement->bindValue(':descriptPlace', $serviceDescription);
+//    $statement->bindValue(':picPlace', $servicePic);
+
+    $statement->execute();
     $results = $statement->fetchAll();
     $statement->closeCursor();
 
     return $results;
 }
-function getAllServices() {
+
+function insertServices($serviceType, $serviceDescription, $servicePic) {
     global $db;
 
-    $query = "select * from services
+    $query = "insert into services
                     (serviceType, serviceDescription, servicePic) 
                     VALUES 
                     (:typePlace, :descriptPlace, :picPlace)";
@@ -114,12 +176,26 @@ function getAllServices() {
     $statement->bindValue(':picPlace', $servicePic);
 
     $statement->execute();
-    $results = $statement->fetchAll();
+    //$imageId = $db->lastInsertId();
     $statement->closeCursor();
 
-    return $results;
+    //return $imageId;
 }
-//images
+
+function deleteService($serviceID) {
+    global $db;
+
+    $query = 'DELETE FROM services
+              WHERE serviceID = :idPlace';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':idPlace', $serviceID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+
+//images functions
 function insertImage($image) {
     global $db;
 
@@ -137,29 +213,29 @@ function insertImage($image) {
 
     //return $imageId;
 }
+
 function getAllImages() {
     global $db;
-    
+
     $query = "SELECT * FROM images";
-    
+
     $statement = $db->prepare($query);
-    
+
     $statement->execute();
     $results = $statement->fetchAll();
     $statement->closeCursor();
 
     return $results;
 }
+
 function deleteFromImages($imageID) {
     global $db;
-    
+
     $query = 'DELETE FROM images
               WHERE imageID = :imagePlace';
-    
+
     $statement = $db->prepare($query);
     $statement->bindValue(':imagePlace', $imageID);
     $statement->execute();
     $statement->closeCursor();
 }
-
-
