@@ -1,7 +1,7 @@
 <?php
 
 //some of this taken from group project
-//session_start();
+session_start();
 require_once('database.php');
 require_once ('valid.php');
 
@@ -16,11 +16,11 @@ if ($action === NULL) {
 }
 
 switch ($action) {
-    //main action
+//main action
     case 'main':
         include ('mainPage.php');
         break;
-    //registration
+//registration
     case 'register':
         $firstName = "";
         $lastName = "";
@@ -44,36 +44,42 @@ switch ($action) {
         insertUser($firstName, $lastName, $email, $address, $city, $zip, $phone, $password);
         exit();
         break;
-    //user views
+//user views
     case 'user':
-        include ('user_home.php');
+        include ('userHome.php');
         break;
 //admin views
     case 'adminView':
         $errorMessage = "";
-        include ('admin_home.php');
+        include ('adminHome.php');
         exit();
         break;
     case 'admin':
         $password = filter_input(INPUT_POST, 'password');
         if (!empty($password) && adminPassword($password)) {
-            include ('adminWork.php');
+            header("Location: ?action=adminWork");
             exit();
         } else {
             $errorMessage = "Stop Playing";
-            include ('admin_home.php');
+            include ('adminHome.php');
             exit();
         }
         break;
     case 'adminWork':
+        $galleryImages = getAllImages();
+        include ('adminWork.php');
+        break;
+    //image views and actions
+    case 'uploadImage':
+        //taken from moodle
         if (isset($_FILES['image'])) {
             $errors = array();
             $file_name = $_FILES['image']['name'];
-            $file_size = $_FILES['image']['size'];
+            //$file_size = $_FILES['image']['size'];
             $file_tmp = $_FILES['image']['tmp_name'];
-            $file_type = $_FILES['image']['type'];
-            $temp = $_FILES['image']['name'];
-            $temp = explode('.', $temp);
+            //$file_type = $_FILES['image']['type'];
+            //$temp = $_FILES['image']['name'];
+            $temp = explode('.', $file_name);
             $temp = end($temp);
             $file_ext = strtolower($temp);
 
@@ -86,12 +92,22 @@ switch ($action) {
             }
 
             if (empty($errors) == true) {
-                move_uploaded_file($file_tmp, "existingDir/" . $file_name);
+                move_uploaded_file($file_tmp, "images/gallery/" . $file_name);
+                $imageURL = "images/gallery/" . $file_name;
+                insertImage($imageURL);
                 echo "Success";
             } else {
                 var_dump($errors);
             }
         }
+        header("Location: ?action=adminWork");
+        break;
+    case 'deleteImage';
+        $imageID = filter_input(INPUT_POST, 'imageID');
+        $imageLocation = filter_input(INPUT_POST, 'imageLocation');
+        deleteFromImages($imageID);
+        unlink($imageLocation);
+        header("Location: ?action=adminWork");
         break;
 };
 

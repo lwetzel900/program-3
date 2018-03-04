@@ -1,7 +1,7 @@
 <?php
 
 //some of this taken from group project
-$dsn = 'mysql:host=localhost;dbname=teambwebsite1';
+$dsn = 'mysql:host=localhost;dbname=wedding';
 $username = 'root';
 $password = '';
 
@@ -55,6 +55,111 @@ function getUserByID($email) {
 
     return $results;
 }
+function getAllUsers() {
+    global $db;
+
+    $query = "select * from users
+                    (fName, lName, email, address, city, zip, phone) 
+                    VALUES 
+                    (:fNamePlace, :lNamePlace, :emailPlace, :addressPlace, :cityPlace, :zipPlace, :phonePlace)";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':fNamePlace', $fName);
+    $statement->bindValue(':lNamePlace', $lName);
+    $statement->bindValue(':emailPlace', $email);
+    $statement->bindValue(':addressPlace', $address);
+    $statement->bindValue(':cityPlace', $city);
+    $statement->bindValue(':zipPlace', $zip);
+    $statement->bindValue(':phonePlace', $phone);
+
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $results;
+}
 
 //admin functions
+function getAllVenues() {
+    global $db;
+
+    $query = "select * from venue
+                    (name, city, state, venuePic) 
+                    VALUES 
+                    (:mamePlace, :cityPlace, :statePlace, :picPlace)";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':namePlace', $name);
+    $statement->bindValue(':cityPlace', $city);
+    $statement->bindValue(':statePlace', $state);
+    $statement->bindValue(':picPlace', $venuePic);
+
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $results;
+}
+function getAllServices() {
+    global $db;
+
+    $query = "select * from services
+                    (serviceType, serviceDescription, servicePic) 
+                    VALUES 
+                    (:typePlace, :descriptPlace, :picPlace)";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':typePlace', $serviceType);
+    $statement->bindValue(':descriptPlace', $serviceDescription);
+    $statement->bindValue(':picPlace', $servicePic);
+
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $results;
+}
+//images
+function insertImage($image) {
+    global $db;
+
+    $query = "insert into images
+                    (galleryImages) 
+                    VALUES 
+                    (:imagePlace)";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':imagePlace', $image);
+
+    $statement->execute();
+    //$imageId = $db->lastInsertId();
+    $statement->closeCursor();
+
+    //return $imageId;
+}
+function getAllImages() {
+    global $db;
+    
+    $query = "SELECT * FROM images";
+    
+    $statement = $db->prepare($query);
+    
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $results;
+}
+function deleteFromImages($imageID) {
+    global $db;
+    
+    $query = 'DELETE FROM images
+              WHERE imageID = :imagePlace';
+    
+    $statement = $db->prepare($query);
+    $statement->bindValue(':imagePlace', $imageID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
 
