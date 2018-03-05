@@ -1,4 +1,4 @@
-<?php include 'view/header.php'; ?>
+<?php include '../view/header.php'; ?>
 <main>
     <br>
     <table>
@@ -29,7 +29,7 @@
     </table><br>
     <p>Add services below</p>
     <form action="" method="post" id="aligned">
-        
+
         <input type="hidden" name="action" value="serviceAdd">
 
         <label>Service Type:</label>
@@ -50,4 +50,4 @@
     <p><a href=".?action=logout">Logout</a></p>
 </main>
 
-<?php include 'view/footer.php'; ?>
+<?php include '../view/footer.php'; ?>

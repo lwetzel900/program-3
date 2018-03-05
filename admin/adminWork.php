@@ -1,4 +1,4 @@
-<?php include 'view/header.php'; ?>
+<?php include '../view/header.php'; ?>
 <main>
     <p>Here you can upload or delete images from the main gallery.</p>
     <br><br>
@@ -12,7 +12,7 @@
         <?php foreach ($galleryImages as $pic) : ?>
             <tr>
                 <!--<td><?php echo htmlspecialchars($pic['imageID']) ?></td>-->
-                <td><image src="<?php echo htmlspecialchars($pic['galleryImages']); ?>" height="120" width="180"</td>
+                <td><image src="/<?php echo htmlspecialchars($basedir . '/' . $pic['galleryImages']); ?>" height="120" width="180"</td>
 
                 <td><form action="." method="post">
                         <input type="hidden" name="action"
@@ -39,4 +39,4 @@
     <p><a href=".?action=logout">Logout</a></p>
 </main>
 
-<?php include 'view/footer.php'; ?>
+<?php include '../view/footer.php'; ?>

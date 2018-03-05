@@ -1,4 +1,4 @@
-<?php include 'view/header.php'; ?>
+<?php include '../view/header.php'; ?>
 <main>
 
     <p><?php echo $errorMessage; ?></p>
@@ -14,10 +14,10 @@
         <input type="submit" value="Login"><br>
 
     </form>
-
+    <p>password is Password123</p>
     <br><br>
 </main>
 
-<?php include 'view/footer.php'; ?>
+<?php include '../view/footer.php'; ?>
 
 

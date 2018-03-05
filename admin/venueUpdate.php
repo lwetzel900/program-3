@@ -1,4 +1,4 @@
-<?php include 'view/header.php'; ?>
+<?php include '../view/header.php'; ?>
 <main>
     <br>
     <table>
@@ -55,5 +55,5 @@
     <p><a href=".?action=logout">Logout</a></p>
 </main>
 
-<?php include 'view/footer.php'; ?>
+<?php include '../view/footer.php'; ?>
 

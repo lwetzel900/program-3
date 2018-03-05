@@ -74,10 +74,10 @@ form {
 table {
     
     border-collapse: collapse;
-    width: 100%;
+/*    width: 100%;*/
 }
 td, th {
     border-bottom: 1px solid black; 
-    padding: 2px;
+    padding: 5px;
     text-align: left;
 }
