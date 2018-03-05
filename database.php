@@ -1,7 +1,7 @@
 <?php
 
 //some of this taken from group project
-$dsn = 'mysql:host=localhost;dbname=wedding';
+$dsn = 'mysql:host=localhost;dbname=program3-lwetzel900';
 $username = 'root';
 $password = '';
 
