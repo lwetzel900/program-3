@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2018 at 08:31 PM
+-- Generation Time: Mar 05, 2018 at 03:38 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -19,12 +19,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `wedding`
+-- Database: `program3-lwetzel900`
 --
 Drop DATABASE IF EXISTS `wedding`;
-CREATE DATABASE IF NOT EXISTS `wedding` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `wedding`;
-
+Drop DATABASE IF EXISTS `program3-lwetzel900`;
+CREATE DATABASE IF NOT EXISTS `program3-lwetzel900` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `program3-lwetzel900`;
 -- --------------------------------------------------------
 
 --
@@ -41,7 +41,6 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`imageID`, `galleryImages`) VALUES
-(5, 'images/gallery/20170224_191639.jpg'),
 (6, 'images/gallery/20170617_113208.jpg');
 
 -- --------------------------------------------------------
@@ -64,9 +63,9 @@ CREATE TABLE `services` (
 INSERT INTO `services` (`serviceID`, `serviceType`, `serviceDescription`, `servicePic`) VALUES
 (1, 'wedding', 'your wedding ceromony', NULL),
 (2, 'wedding reception', 'for everything after the ceromy', NULL),
-(3, 'birthday', 'rather it is for your 4 or 40 year old we have you covered', NULL),
 (4, 'aniversary', 'celebrating a big turning point in a relationship? we can cover that to', NULL),
-(5, 'graduation reception', 'your special person is graduating high school or college, you guessed it. we do that as well', NULL);
+(5, 'graduation reception', 'your special person is graduating high school or college, you guessed it. we do that as well', NULL),
+(7, 'birthday', 'rater it be your 4 or 40 year old, we got you covered', 'default');
 
 -- --------------------------------------------------------
 
@@ -83,7 +82,7 @@ CREATE TABLE `users` (
   `city` varchar(15) NOT NULL,
   `zip` int(5) NOT NULL,
   `phone` varchar(13) NOT NULL,
-  `password` varchar(15) NOT NULL
+  `password` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -91,8 +90,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userID`, `fName`, `lName`, `email`, `address`, `city`, `zip`, `phone`, `password`) VALUES
-(1, 'Loren', 'Wetzel', 'lwetzel90@gmail.com', '609 4th Ave', 'Nebraska City', 68410, '4028817220', 'Romeoray02'),
-(2, 'Romeo', 'Wetzel', 'romeo@romeo.com', '522 Romeo Way', 'Nebraska City', 68410, '4028741579', 'FreddyFaz123');
+(9, 'Loren', 'Wetzel', 'lwetzel90@gmail.com', '609 4th Ave', 'Nebraska City', 68410, '4028817220', '$2y$12$33CoiE0rHEZR/Fk.qheCg.S0718wisKuyZweG4ZpWzjp37781/arG');
 
 -- --------------------------------------------------------
 
@@ -114,8 +112,7 @@ CREATE TABLE `venue` (
 
 INSERT INTO `venue` (`venueID`, `name`, `city`, `state`, `venuePic`) VALUES
 (1, 'Fox Center', 'Nebraska City', 'NE', NULL),
-(2, 'Arbor Lodege', 'Nebraska City', 'NE', NULL),
-(3, 'Cottonwood Pavilion', 'Shenandoah', 'IA', NULL);
+(4, 'Arbor Lodge', 'Nebraska City', 'NE', 'default');
 
 --
 -- Indexes for dumped tables
@@ -160,19 +157,19 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `serviceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `serviceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `venue`
 --
 ALTER TABLE `venue`
-  MODIFY `venueID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `venueID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
