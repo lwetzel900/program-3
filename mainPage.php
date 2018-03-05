@@ -18,7 +18,7 @@
 
     <ul>
         <li>
-            <a href=".?action=user">User</a>
+            <a href=".?action=viewUserLogin">User</a>
         </li>
         <li>
             <a href=".?action=adminView">Admin</a>

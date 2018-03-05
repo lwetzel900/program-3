@@ -12,5 +12,6 @@
     <img src="images/SummerstarCreationsLogo.jpg" alt="Kissing Heart">
     <p>Planning, Decorating and Everything Wedding</p>
 </header>
+    <?php var_dump($_SESSION)?>
 
 

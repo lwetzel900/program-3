@@ -34,7 +34,9 @@
         <input type="submit"/>
     </form>
     <br>
-    <p>Update <a href=".?action=venueUpdate">Venues</a> or update <a href=".?action=servicesUpdate">Services Provided</a></p>
+    <p>Update <a href=".?action=venueUpdate">Venues</a>, <a href=".?action=servicesUpdate">Services Provided</a>, 
+        or manage <a href=".?action=userUpdate">Users</a>.</p>
+    <p><a href=".?action=logout">Logout</a></p>
 </main>
 
 <?php include 'view/footer.php'; ?>

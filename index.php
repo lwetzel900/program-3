@@ -35,18 +35,62 @@ switch ($action) {
     case 'addUser':
         $firstName = filter_input(INPUT_POST, 'firstName');
         $lastName = filter_input(INPUT_POST, 'lastName');
-        $email = filter_input(INPUT_POST, 'email');
+        $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $address = filter_input(INPUT_POST, 'address');
         $city = filter_input(INPUT_POST, 'city');
         $zip = filter_input(INPUT_POST, 'zip');
         $phone = filter_input(INPUT_POST, 'phone');
         $password = filter_input(INPUT_POST, 'password');
-        insertUser($firstName, $lastName, $email, $address, $city, $zip, $phone, $password);
+        insertUser($firstName, $lastName, $email, $address, $city, $zip, $phone, hashPassword($password));
+        //exit();
+        $_SESSION['user'] = getUserByID($email);
+        header("Location: ?action=userProfile");
+        break;
+    
+//user views
+    case 'viewUserLogin':
+        $errorMessage = "";
+        include('userLogin.php');
         exit();
         break;
-//user views
-    case 'user':
-        include ('userHome.php');
+    case 'userLogin':
+        $email = filter_input(INPUT_POST, 'email');
+        $password = filter_input(INPUT_POST, 'password');
+        
+        if(!empty($email) && emailExists($email)) {
+            $storedPassword = getHashedPassword($email);
+        }
+        else{
+            $errorMessage = "Invalid email";
+            $stored_password = "";
+            include('userLogin.php');
+            exit();
+        }
+        
+        if(password_verify($password, $storedPassword)){
+            $_SESSION['user'] = getUserByID($email);
+            header("Location: ?action=userProfile");
+            exit();
+        } else{
+            $errorMessage = "Invalid username password combination";
+            include('userLogin.php');
+            exit();
+        }
+        break;
+    
+    case 'userProfile':
+        If (empty($_SESSION['user'])) {
+            header("Location: .");
+            exit();
+        } else {
+            $fName = $_SESSION['user']['fName'];
+            $lName = $_SESSION['user']['lName'];
+            
+            
+            include('userProfile.php');
+            exit();
+        }
+        
         break;
 //admin views
     case 'adminView':
@@ -68,6 +112,16 @@ switch ($action) {
     case 'adminWork':
         $galleryImages = getAllImages();
         include ('adminWork.php');
+        break;
+//admin user view
+    case 'userUpdate':
+        $allUsers = getAllUsers();
+        include('manageUser.php');
+        break;
+    case 'deleteUser':
+        $userID = filter_input(INPUT_POST, 'userID');
+        deleteUser($userID);
+        header("Location: ?action=userUpdate");
         break;
 //venue views
     case 'venueUpdate':
@@ -146,10 +200,15 @@ switch ($action) {
         unlink($imageLocation);
         header("Location: ?action=adminWork");
         break;
+    case'logout':
+        session_unset();
+        header("Location: .");
+        exit();
+        break;
 };
 
-//taken from group project
-function hashPassword($password) {
-    $options = ['cost' => 12];
-    return password_hash($password, PASSWORD_DEFAULT, $options);
-}
+////taken from group project
+//function hashPassword($password) {
+//    $options = ['cost' => 12];
+//    return password_hash($password, PASSWORD_DEFAULT, $options);
+//}

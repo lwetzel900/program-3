@@ -36,9 +36,11 @@ footer {
     border-top: 2px solid black;
 }
 footer a {
+/*    float:left;*/
     text-align: left;
 }
 footer p {
+    /*float:right;*/
     text-align: right;
     font-size: 80%;
 }
@@ -70,7 +72,7 @@ form {
     width: 15em;
 }
 table {
-    border: 1px solid black;
+    
     border-collapse: collapse;
     width: 100%;
 }

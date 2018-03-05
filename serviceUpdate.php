@@ -47,6 +47,7 @@
 
     </form>
     <p><a href=".?action=adminWork">Admin Home</a> </p>
+    <p><a href=".?action=logout">Logout</a></p>
 </main>
 
 <?php include 'view/footer.php'; ?>

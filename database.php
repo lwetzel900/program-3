@@ -42,6 +42,21 @@ function insertUser($fName, $lName, $email, $address, $city, $zip, $phone, $pass
 
     return $userId;
 }
+//modified from group project
+function getHashedPassword($email){
+        global $db;
+        //looks for the email
+        $query = "SELECT password FROM users WHERE email = :emailPlace";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':emailPlace', $email);
+        
+        $statement->execute();
+        $results = $statement->fetch();
+        $statement->closeCursor();
+        
+        $hashedPassword = $results['password'];
+        return $hashedPassword;
+    }
 
 function getUserByID($email) {
     global $db;
@@ -62,18 +77,8 @@ function getAllUsers() {
     global $db;
 
     $query = "select * from users";
-//                    (fName, lName, email, address, city, zip, phone) 
-//                    VALUES 
-//                    (:fNamePlace, :lNamePlace, :emailPlace, :addressPlace, :cityPlace, :zipPlace, :phonePlace)";
 
     $statement = $db->prepare($query);
-//    $statement->bindValue(':fNamePlace', $fName);
-//    $statement->bindValue(':lNamePlace', $lName);
-//    $statement->bindValue(':emailPlace', $email);
-//    $statement->bindValue(':addressPlace', $address);
-//    $statement->bindValue(':cityPlace', $city);
-//    $statement->bindValue(':zipPlace', $zip);
-//    $statement->bindValue(':phonePlace', $phone);
 
     $statement->execute();
     $results = $statement->fetchAll();
@@ -82,8 +87,39 @@ function getAllUsers() {
     return $results;
 }
 
-//admin functions
+//checks all emails for duplicates
+function emailExists($email){
+        global $db;
+        
+        $query = "SELECT * FROM users WHERE email = :emailPlace";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':emailPlace', $email);
+        
+        $statement->execute();
+        $results = $statement->fetchAll();//returns results of select statement if anything
+        $statement->closeCursor();
+        
+        if(empty($results)){//if results is empty than return flase
+            $exists = false;
+        }else {//if results has something return true
+            $exists = true;
+        }
+        
+        return $exists;
+    }
 
+//admin functions
+function deleteUser($userID) {
+    global $db;
+
+    $query = 'DELETE FROM users
+              WHERE userID = :idPlace';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':idPlace', $userID);
+    $statement->execute();
+    $statement->closeCursor();
+}
 
 //venue functions
 function getAllVenues() {
