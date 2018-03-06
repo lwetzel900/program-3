@@ -16,6 +16,7 @@ if ($action === NULL) {
 }
 $allServices = getAllServices();
 $allVenues = getAllVenues();
+
 switch ($action) {
 //main action
     case 'main':
@@ -85,6 +86,11 @@ switch ($action) {
         } else {
             $fName = $_SESSION['user']['fName'];
             $lName = $_SESSION['user']['lName'];
+            $venueID = filter_input(INPUT_POST, 'venue');
+            $venueAndService = getVenueServiceByID($venueID);
+            $services = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+            var_dump($services, $venueAndService);
+            //var_dump($venueAndService);
 
             include('userProfile.php');
             exit();
@@ -98,7 +104,10 @@ switch ($action) {
 
     case 'selectService':
         $userID = $_SESSION['user']['userID'];
-        
+        //$venueID = filter_input(INPUT_POST, $venue);
+        //$aVenue = getVenueByID($venueID);
+        //$aService = getServiceByID($serviceID);
+        header("Location: ?action=userProfile");
         break;
 
     case 'selectVenue':

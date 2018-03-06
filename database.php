@@ -15,8 +15,6 @@ try {
 }
 
 //user database functions
-
-
 //insert user into table
 function insertUser($fName, $lName, $email, $address, $city, $zip, $phone, $password) {
     global $db;
@@ -42,21 +40,22 @@ function insertUser($fName, $lName, $email, $address, $city, $zip, $phone, $pass
 
     return $userId;
 }
+
 //modified from group project
-function getHashedPassword($email){
-        global $db;
-        //looks for the email
-        $query = "SELECT password FROM users WHERE email = :emailPlace";
-        $statement = $db->prepare($query);
-        $statement->bindValue(':emailPlace', $email);
-        
-        $statement->execute();
-        $results = $statement->fetch();
-        $statement->closeCursor();
-        
-        $hashedPassword = $results['password'];
-        return $hashedPassword;
-    }
+function getHashedPassword($email) {
+    global $db;
+    //looks for the email
+    $query = "SELECT password FROM users WHERE email = :emailPlace";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':emailPlace', $email);
+
+    $statement->execute();
+    $results = $statement->fetch();
+    $statement->closeCursor();
+
+    $hashedPassword = $results['password'];
+    return $hashedPassword;
+}
 
 function getUserByEmail($email) {
     global $db;
@@ -103,25 +102,25 @@ function getAllUsers() {
 }
 
 //checks all emails for duplicates
-function emailExists($email){
-        global $db;
-        
-        $query = "SELECT * FROM users WHERE email = :emailPlace";
-        $statement = $db->prepare($query);
-        $statement->bindValue(':emailPlace', $email);
-        
-        $statement->execute();
-        $results = $statement->fetchAll();//returns results of select statement if anything
-        $statement->closeCursor();
-        
-        if(empty($results)){//if results is empty than return flase
-            $exists = false;
-        }else {//if results has something return true
-            $exists = true;
-        }
-        
-        return $exists;
+function emailExists($email) {
+    global $db;
+
+    $query = "SELECT * FROM users WHERE email = :emailPlace";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':emailPlace', $email);
+
+    $statement->execute();
+    $results = $statement->fetchAll(); //returns results of select statement if anything
+    $statement->closeCursor();
+
+    if (empty($results)) {//if results is empty than return flase
+        $exists = false;
+    } else {//if results has something return true
+        $exists = true;
     }
+
+    return $exists;
+}
 
 //admin functions
 function deleteUser($userID) {
@@ -207,7 +206,6 @@ function deleteVenue($venueID) {
     $statement->closeCursor();
 }
 
-
 //services functions
 function getAllServices() {
     global $db;
@@ -277,7 +275,6 @@ function deleteService($serviceID) {
     $statement->closeCursor();
 }
 
-
 //images functions
 function insertImage($image) {
     global $db;
@@ -324,14 +321,14 @@ function deleteFromImages($imageID) {
 }
 
 //user selection functions
-function insertIntoSelection($userID, $venueID, $serviceID){
+function insertIntoSelection($userID, $venueID, $serviceID) {
     global $db;
-    
+
     $query = 'insert into userselection
                     (userID, venueID, serviceID) 
                     VALUES 
                     (:userPlace, :venuePlace, :servicePlace)';
-    
+
     $statement = $db->prepare($query);
     $statement->bindValue(':userPlace', $userID);
     $statement->bindValue(':venuePlace', $venueID);
@@ -344,13 +341,13 @@ function insertIntoSelection($userID, $venueID, $serviceID){
     //return $imageId;
 }
 
-function insertServiceIntoSelection($userID, $serviceID){
+function insertServiceIntoSelection($userID, $serviceID) {
     global $db;
-    
+
     $query = 'update userselection
                 set serviceID = :servicePlace
                     WHERE userID = :userPlace';
-    
+
     $statement = $db->prepare($query);
     $statement->bindValue(':userPlace', $userID);
 //    $statement->bindValue(':venuePlace', $venueID);
@@ -363,14 +360,13 @@ function insertServiceIntoSelection($userID, $serviceID){
     //return $imageId;
 }
 
-
-function insertVenueIntoSelection($userID, $venueID){
+function insertVenueIntoSelection($userID, $venueID) {
     global $db;
-    
+
     $query = 'update userselection
                 set venueID = :venuePlace
                     WHERE userID = :userPlace';
-    
+
     $statement = $db->prepare($query);
     $statement->bindValue(':userPlace', $userID);
     $statement->bindValue(':venuePlace', $venueID);
@@ -381,4 +377,25 @@ function insertVenueIntoSelection($userID, $venueID){
     $statement->closeCursor();
 
     //return $imageId;
+}
+
+//venueService table functions
+function getVenueServiceByID($venueID) {
+    global $db;
+
+    $query = "select * from venueservice
+                where venueID = :venuePlace";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':venuePlace', $venueID);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+    
+    $services = array();
+    foreach ($results as $ser){
+        $services[] = $ser['serviceID'];
+    }
+
+    return $services;
 }
