@@ -30,7 +30,7 @@
         <label>&nbsp;</label>
         <input type="submit" value="Register">
     </form>
-
+    <br><p><a href=".?action=logout">Home</a></p><br>
 </body>
 <?php include 'view/footer.php'; ?>
 

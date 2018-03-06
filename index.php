@@ -14,7 +14,8 @@ if ($action === NULL) {
         $action = 'main';
     }
 }
-
+$allServices = getAllServices();
+$allVenues = getAllVenues();
 switch ($action) {
 //main action
     case 'main':
@@ -43,10 +44,10 @@ switch ($action) {
         $password = filter_input(INPUT_POST, 'password');
         insertUser($firstName, $lastName, $email, $address, $city, $zip, $phone, hashPassword($password));
         //exit();
-        $_SESSION['user'] = getUserByID($email);
+        $_SESSION['user'] = getUserByEmail($email);
         header("Location: ?action=userProfile");
         break;
-    
+
 //user views
     case 'viewUserLogin':
         $errorMessage = "";
@@ -56,28 +57,27 @@ switch ($action) {
     case 'userLogin':
         $email = filter_input(INPUT_POST, 'email');
         $password = filter_input(INPUT_POST, 'password');
-        
-        if(!empty($email) && emailExists($email)) {
+
+        if (!empty($email) && emailExists($email)) {
             $storedPassword = getHashedPassword($email);
-        }
-        else{
+        } else {
             $errorMessage = "Invalid email";
             $stored_password = "";
             include('userLogin.php');
             exit();
         }
-        
-        if(password_verify($password, $storedPassword)){
-            $_SESSION['user'] = getUserByID($email);
+
+        if (password_verify($password, $storedPassword)) {
+            $_SESSION['user'] = getUserByEmail($email);
             header("Location: ?action=userProfile");
             exit();
-        } else{
+        } else {
             $errorMessage = "Invalid username password combination";
             include('userLogin.php');
             exit();
         }
         break;
-    
+
     case 'userProfile':
         If (empty($_SESSION['user'])) {
             header("Location: .");
@@ -85,20 +85,28 @@ switch ($action) {
         } else {
             $fName = $_SESSION['user']['fName'];
             $lName = $_SESSION['user']['lName'];
-            
+
             include('userProfile.php');
             exit();
         }
         break;
-        case'showOptions';
-            $allServices = getAllServices();
-            $allVenues = getAllVenues();
-            break;
-        
+    case'showOptions';
+//        $allServices = getAllServices();
+//        $allVenues = getAllVenues();
+        include ('showOptions.php');
+        break;
+
     case 'selectService':
         break;
-    
-    case 'selectVebue':
+
+    case 'selectVenue':
+        break;
+
+//visitor views  
+    case 'visitorShow':
+//        $allServices = getAllServices();
+//        $allVenues = getAllVenues();
+        include ('visitorShow.php');
         break;
 
     case'logout':

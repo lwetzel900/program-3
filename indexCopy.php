@@ -43,7 +43,7 @@ switch ($action) {
         $password = filter_input(INPUT_POST, 'password');
         insertUser($firstName, $lastName, $email, $address, $city, $zip, $phone, hashPassword($password));
         //exit();
-        $_SESSION['user'] = getUserByID($email);
+        $_SESSION['user'] = getUserByEmail($email);
         header("Location: ?action=userProfile");
         break;
     
@@ -68,7 +68,7 @@ switch ($action) {
         }
         
         if(password_verify($password, $storedPassword)){
-            $_SESSION['user'] = getUserByID($email);
+            $_SESSION['user'] = getUserByEmail($email);
             header("Location: ?action=userProfile");
             exit();
         } else{

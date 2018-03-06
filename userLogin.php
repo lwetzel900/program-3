@@ -3,7 +3,7 @@
     <br>
     <p><a href=".?action=register">Create</a> an account to save all your information or login to
         view what you have already created.</p>
-    <h2><?php echo htmlspecialchars($errorMessage)?></h2>
+    <h2><?php echo htmlspecialchars($errorMessage) ?></h2>
 
     <br><br>
     <form action="" method="post" id="aligned">
@@ -15,7 +15,7 @@
         <label>Password</label>
         <input type="password" name="password"> <br>
         <label>&nbsp;</label>
-<!--        <input type="hidden" name="action" value="userProfile">-->
+
         <input type="submit" value="Login"><br>
     </form>
     <br><br>

@@ -23,6 +23,9 @@
         <li>
             <a href="admin">Admin</a>
         </li>
+        <li>
+            <a href=".?action=visitorShow">Visitors</a>
+        </li>
     </ul>
 </main>
 

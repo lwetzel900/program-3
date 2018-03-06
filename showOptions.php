@@ -1,7 +1,7 @@
 <?php include 'view/header.php'; ?>
 <main>
     <br>
-   
+
 
     <h2>Select a venue</h2>
 
@@ -62,7 +62,7 @@
             </tr>
         <?php endforeach; ?>
     </table><br>
-    
+
     <p><a href=".?action=logout">Logout</a></p>
 </main>
 <?php include 'view/footer.php'; ?>

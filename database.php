@@ -58,13 +58,28 @@ function getHashedPassword($email){
         return $hashedPassword;
     }
 
-function getUserByID($email) {
+function getUserByEmail($email) {
     global $db;
     // not returning the password becuase we probably shouldn't.
     $query = "SELECT userID, fName, lName, email 
                 FROM users WHERE email = :emailPlace";
     $statement = $db->prepare($query);
     $statement->bindValue(':emailPlace', $email);
+
+    $statement->execute();
+    $results = $statement->fetch();
+    $statement->closeCursor();
+
+    return $results;
+}
+
+function getUserByID($userID) {
+    global $db;
+    // not returning the password becuase we probably shouldn't.
+    $query = "SELECT fName, lName
+                FROM users WHERE userID = :idPlace";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':idPlace', $userID);
 
     $statement->execute();
     $results = $statement->fetch();
@@ -143,6 +158,22 @@ function getAllVenues() {
     return $results;
 }
 
+function getVenueByID($venueID) {
+    global $db;
+
+    $query = "select name, city from venue
+                        WHERE venueID = :idPlace";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':idPlace', $venueID);
+
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $results;
+}
+
 function insertVenue($name, $city, $state, $venuePic) {
     global $db;
 
@@ -190,6 +221,22 @@ function getAllServices() {
 //    $statement->bindValue(':typePlace', $serviceType);
 //    $statement->bindValue(':descriptPlace', $serviceDescription);
 //    $statement->bindValue(':picPlace', $servicePic);
+
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $results;
+}
+
+function getServiceByID($serviceID) {
+    global $db;
+
+    $query = "select serviceType, serviceDescription from venue
+                        WHERE serviceID = :idPlace";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':idPlace', $serviceID);
 
     $statement->execute();
     $results = $statement->fetchAll();
@@ -274,4 +321,44 @@ function deleteFromImages($imageID) {
     $statement->bindValue(':imagePlace', $imageID);
     $statement->execute();
     $statement->closeCursor();
+}
+
+//user selection functions
+function insertIntoSelection($userID, $venueID, $serviceID){
+    global $db;
+    
+    $query = 'insert into userselection
+                    (userID, venueID, serviceID) 
+                    VALUES 
+                    (:userPlace, :venuePlace, :servicePlace)';
+    
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userPlace', $userID);
+    $statement->bindValue(':venuePlace', $venueID);
+    $statement->bindValue(':servicePlace', $serviceID);
+
+    $statement->execute();
+    //$imageId = $db->lastInsertId();
+    $statement->closeCursor();
+
+    //return $imageId;
+}
+
+function insertServiceIntoSelection($userID, $serviceID){
+    global $db;
+    
+    $query = 'insert into userselection
+                    (serviceID ) 
+                    WHERE userPlace = :$userID';
+    
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userPlace', $userID);
+    $statement->bindValue(':venuePlace', $venueID);
+    $statement->bindValue(':servicePlace', $serviceID);
+
+    $statement->execute();
+    //$imageId = $db->lastInsertId();
+    $statement->closeCursor();
+
+    //return $imageId;
 }
