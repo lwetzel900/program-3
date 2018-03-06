@@ -347,14 +347,34 @@ function insertIntoSelection($userID, $venueID, $serviceID){
 function insertServiceIntoSelection($userID, $serviceID){
     global $db;
     
-    $query = 'insert into userselection
-                    (serviceID ) 
-                    WHERE userPlace = :$userID';
+    $query = 'update userselection
+                set serviceID = :servicePlace
+                    WHERE userID = :userPlace';
+    
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userPlace', $userID);
+//    $statement->bindValue(':venuePlace', $venueID);
+    $statement->bindValue(':servicePlace', $serviceID);
+
+    $statement->execute();
+    //$imageId = $db->lastInsertId();
+    $statement->closeCursor();
+
+    //return $imageId;
+}
+
+
+function insertVenueIntoSelection($userID, $venueID){
+    global $db;
+    
+    $query = 'update userselection
+                set venueID = :venuePlace
+                    WHERE userID = :userPlace';
     
     $statement = $db->prepare($query);
     $statement->bindValue(':userPlace', $userID);
     $statement->bindValue(':venuePlace', $venueID);
-    $statement->bindValue(':servicePlace', $serviceID);
+//    $statement->bindValue(':servicePlace', $serviceID);
 
     $statement->execute();
     //$imageId = $db->lastInsertId();

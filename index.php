@@ -97,6 +97,8 @@ switch ($action) {
         break;
 
     case 'selectService':
+        $userID = $_SESSION['user']['userID'];
+        
         break;
 
     case 'selectVenue':
