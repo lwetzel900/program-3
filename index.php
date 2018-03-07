@@ -1,6 +1,7 @@
 <?php
 
 //some of this taken from group project
+session_set_cookie_params(600, '/');
 session_start();
 require_once('database.php');
 require_once ('valid.php');
@@ -84,6 +85,18 @@ switch ($action) {
             header("Location: .");
             exit();
         } else {
+            $fName = $_SESSION['user']['fName'];
+            $lName = $_SESSION['user']['lName'];
+            $userID = $_SESSION['user']['userID'];
+            
+            include('userProfile.php');
+            
+            exit();
+        }
+      
+        break;
+        
+        case 'userProfileAfterOptions':
             $venueID = filter_input(INPUT_POST, 'venue');
             $_SESSION['venue'] = getVenueNameByID(filter_input(INPUT_POST, 'venue'));
             $service = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
@@ -93,28 +106,34 @@ switch ($action) {
             $lName = $_SESSION['user']['lName'];
             $userID = $_SESSION['user']['userID'];
             $venueName = $_SESSION['venue']['name'];
-            
-//            if(!empty($_SESSION['choice']))
-//            foreach ($service as $serv) {
-//                insertIntoSelection($userID, $venueID, $serv);
-//            }
-//            
-            include('userProfile.php');
-            var_dump($venueID, $services, $service);
-            exit();
-        }
+            //$services = $_SESSION['choice'];
+
+            if (!empty($_SESSION['choice'])) {
+//                $services = convertServices($service);
+//                $_SESSION['choice'] = $services;
+                foreach ($service as $serv) {
+                    insertIntoSelection($userID, $venueID, $serv);
+                }
+            }
+            include('userProfileOptions.php');
         break;
+        
     case'showOptions';
-        unset($_SESSION['choice']);
+        //$_SESSION['choice'] = array();
 //        $allServices = getAllServices();
 //        $allVenues = getAllVenues();
         include ('showOptions.php');
         break;
 
     case 'selectService':
-        $userID = $_SESSION['user']['userID'];
+//        $userID = $_SESSION['user']['userID'];
+//        $venueID = filter_input(INPUT_POST, 'venue');
+//            $_SESSION['venue'] = getVenueNameByID(filter_input(INPUT_POST, 'venue'));
+//            $service = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+//            $services = convertServices($service);
+//            $_SESSION['choice'] = $services;
 
-        header("Location: ?action=userProfile");
+        header("Location: ?action=userProfileAfterOptions");
 
         break;
 

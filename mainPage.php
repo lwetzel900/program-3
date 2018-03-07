@@ -21,7 +21,7 @@
             <a href=".?action=viewUserLogin">User</a>
         </li>
         <li>
-            <a href="admin">Admin</a>
+            <a href="administer">Admin</a>
         </li>
         <li>
             <a href=".?action=visitorShow">Visitors</a>
