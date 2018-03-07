@@ -86,20 +86,26 @@ switch ($action) {
         } else {
             $venueID = filter_input(INPUT_POST, 'venue');
             $_SESSION['venue'] = getVenueNameByID(filter_input(INPUT_POST, 'venue'));
-            //$services = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
-            $services = convertServices(filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY));
+            $service = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+            $services = convertServices($service);
             $_SESSION['choice'] = $services;
             $fName = $_SESSION['user']['fName'];
             $lName = $_SESSION['user']['lName'];
             $userID = $_SESSION['user']['userID'];
             $venueName = $_SESSION['venue']['name'];
             
+//            if(!empty($_SESSION['choice']))
+//            foreach ($service as $serv) {
+//                insertIntoSelection($userID, $venueID, $serv);
+//            }
+//            
             include('userProfile.php');
-            var_dump($venueID, $services);
+            var_dump($venueID, $services, $service);
             exit();
         }
         break;
     case'showOptions';
+        unset($_SESSION['choice']);
 //        $allServices = getAllServices();
 //        $allVenues = getAllVenues();
         include ('showOptions.php');
@@ -107,12 +113,8 @@ switch ($action) {
 
     case 'selectService':
         $userID = $_SESSION['user']['userID'];
-convertServices($userID, $venueID, $services);
-        //$venueID = filter_input(INPUT_POST, $venue);
-        //$aVenue = getVenueByID($venueID);
-        //$aService = getServiceByID($serviceID);
-        header("Location: ?action=userProfile");
 
+        header("Location: ?action=userProfile");
 
         break;
 
@@ -133,7 +135,7 @@ convertServices($userID, $venueID, $services);
         break;
 }; //end of switch
 
-function convertServices/*($userID, $venueID, $services)*/($services) {
+function convertServices/* ($userID, $venueID, $services) */($services) {
     $serviceName = array();
 
     foreach ($services as $serv) {
