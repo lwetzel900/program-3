@@ -84,15 +84,18 @@ switch ($action) {
             header("Location: .");
             exit();
         } else {
+            $venueID = filter_input(INPUT_POST, 'venue');
+            $_SESSION['venue'] = getVenueNameByID(filter_input(INPUT_POST, 'venue'));
+            //$services = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+            $services = convertServices(filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY));
+            $_SESSION['choice'] = $services;
             $fName = $_SESSION['user']['fName'];
             $lName = $_SESSION['user']['lName'];
-            $venueID = filter_input(INPUT_POST, 'venue');
-            $venueAndService = getVenueServiceByID($venueID);
-            $services = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
-            var_dump($services, $venueAndService);
-            //var_dump($venueAndService);
-
+            $userID = $_SESSION['user']['userID'];
+            $venueName = $_SESSION['venue']['name'];
+            
             include('userProfile.php');
+            var_dump($venueID, $services);
             exit();
         }
         break;
@@ -104,10 +107,13 @@ switch ($action) {
 
     case 'selectService':
         $userID = $_SESSION['user']['userID'];
+convertServices($userID, $venueID, $services);
         //$venueID = filter_input(INPUT_POST, $venue);
         //$aVenue = getVenueByID($venueID);
         //$aService = getServiceByID($serviceID);
         header("Location: ?action=userProfile");
+
+
         break;
 
     case 'selectVenue':
@@ -125,7 +131,17 @@ switch ($action) {
         header("Location: .");
         exit();
         break;
-};
+}; //end of switch
+
+function convertServices/*($userID, $venueID, $services)*/($services) {
+    $serviceName = array();
+
+    foreach ($services as $serv) {
+        $serviceName[] = getServiceTypeByID($serv);
+        //insertIntoSelection($userID, $venueID, $serv);
+    }
+    return $serviceName;
+}
 
 ////taken from group project
 //function hashPassword($password) {

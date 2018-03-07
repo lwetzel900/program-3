@@ -19,7 +19,10 @@ SET time_zone = "+00:00";
 --
 -- Database: `program3-lwetzel900`
 --
-
+Drop DATABASE IF EXISTS `wedding`;
+Drop DATABASE IF EXISTS `program3-lwetzel900`;
+CREATE DATABASE IF NOT EXISTS `program3-lwetzel900` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `program3-lwetzel900`;
 -- --------------------------------------------------------
 
 --
@@ -36,7 +39,7 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`imageID`, `galleryImages`) VALUES
-(6, 'images/gallery/20170617_113208.jpg');
+(1, 'images/gallery/20170617_113208.jpg');
 
 -- --------------------------------------------------------
 
@@ -58,9 +61,9 @@ CREATE TABLE `services` (
 INSERT INTO `services` (`serviceID`, `serviceType`, `serviceDescription`, `servicePic`) VALUES
 (1, 'wedding', 'your wedding ceromony', NULL),
 (2, 'wedding reception', 'for everything after the ceromy', NULL),
-(4, 'aniversary', 'celebrating a big turning point in a relationship? we can cover that to', NULL),
-(5, 'graduation reception', 'your special person is graduating high school or college, you guessed it. we do that as well', NULL),
-(7, 'birthday', 'rater it be your 4 or 40 year old, we got you covered', 'default');
+(3, 'aniversary', 'celebrating a big turning point in a relationship? we can cover that to', NULL),
+(4, 'graduation reception', 'your special person is graduating high school or college, you guessed it. we do that as well', NULL),
+(5, 'birthday', 'rater it be your 4 or 40 year old, we got you covered', 'default');
 
 -- --------------------------------------------------------
 
@@ -85,8 +88,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userID`, `fName`, `lName`, `email`, `address`, `city`, `zip`, `phone`, `password`) VALUES
-(9, 'Loren', 'Wetzel', 'lwetzel90@gmail.com', '609 4th Ave', 'Nebraska City', 68410, '4028817220', '$2y$12$33CoiE0rHEZR/Fk.qheCg.S0718wisKuyZweG4ZpWzjp37781/arG'),
-(10, 'jonny', 'jonson', 'jon@jonson.com', '156 johnnyway', 'jonsville', 68450, '7896541523', '$2y$12$nIjUEHtRovHmlPhqIRm9b.53t8xb9o0YyJ8z7MFGhjm7K0ek9gb2u');
+(1, 'Loren', 'Wetzel', 'lwetzel90@gmail.com', '609 4th Ave', 'Nebraska City', 68410, '4028817220', '$2y$12$33CoiE0rHEZR/Fk.qheCg.S0718wisKuyZweG4ZpWzjp37781/arG'),
+(2, 'jonny', 'jonson', 'jon@jonson.com', '156 johnnyway', 'jonsville', 68450, '7896541523', '$2y$12$nIjUEHtRovHmlPhqIRm9b.53t8xb9o0YyJ8z7MFGhjm7K0ek9gb2u');
 
 -- --------------------------------------------------------
 
@@ -121,7 +124,7 @@ CREATE TABLE `venue` (
 
 INSERT INTO `venue` (`venueID`, `name`, `city`, `state`, `venuePic`) VALUES
 (1, 'Fox Center', 'Nebraska City', 'NE', NULL),
-(4, 'Arbor Lodge', 'Nebraska City', 'NE', 'default');
+(2, 'Arbor Lodge', 'Nebraska City', 'NE', 'default');
 
 -- --------------------------------------------------------
 

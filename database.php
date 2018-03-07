@@ -62,6 +62,7 @@ function getUserByEmail($email) {
     // not returning the password becuase we probably shouldn't.
     $query = "SELECT userID, fName, lName, email 
                 FROM users WHERE email = :emailPlace";
+
     $statement = $db->prepare($query);
     $statement->bindValue(':emailPlace', $email);
 
@@ -77,6 +78,7 @@ function getUserByID($userID) {
     // not returning the password becuase we probably shouldn't.
     $query = "SELECT fName, lName
                 FROM users WHERE userID = :idPlace";
+
     $statement = $db->prepare($query);
     $statement->bindValue(':idPlace', $userID);
 
@@ -93,7 +95,6 @@ function getAllUsers() {
     $query = "select * from users";
 
     $statement = $db->prepare($query);
-
     $statement->execute();
     $results = $statement->fetchAll();
     $statement->closeCursor();
@@ -122,7 +123,7 @@ function emailExists($email) {
     return $exists;
 }
 
-//admin functions
+//admin functions*************************************************************
 function deleteUser($userID) {
     global $db;
 
@@ -135,21 +136,13 @@ function deleteUser($userID) {
     $statement->closeCursor();
 }
 
-//venue functions
+//venue functions*********************************************************************
 function getAllVenues() {
     global $db;
 
     $query = "select * from venue";
-//                    (name, city, state, venuePic) 
-//                    VALUES 
-//                    (:mamePlace, :cityPlace, :statePlace, :picPlace)";
 
     $statement = $db->prepare($query);
-//    $statement->bindValue(':namePlace', $name);
-//    $statement->bindValue(':cityPlace', $city);
-//    $statement->bindValue(':statePlace', $state);
-//    $statement->bindValue(':picPlace', $venuePic);
-
     $statement->execute();
     $results = $statement->fetchAll();
     $statement->closeCursor();
@@ -167,7 +160,23 @@ function getVenueByID($venueID) {
     $statement->bindValue(':idPlace', $venueID);
 
     $statement->execute();
-    $results = $statement->fetchAll();
+    $results = $statement->fetch();
+    $statement->closeCursor();
+
+    return $results;
+}
+
+function getVenueNameByID($venueID) {
+    global $db;
+
+    $query = "select name from venue
+                        WHERE venueID = :idPlace";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':idPlace', $venueID);
+
+    $statement->execute();
+    $results = $statement->fetch();
     $statement->closeCursor();
 
     return $results;
@@ -206,20 +215,13 @@ function deleteVenue($venueID) {
     $statement->closeCursor();
 }
 
-//services functions
+//services functions***********************************************************
 function getAllServices() {
     global $db;
 
     $query = "select * from services";
-//                    (serviceType, serviceDescription, servicePic) 
-//                    VALUES 
-//                    (:typePlace, :descriptPlace, :picPlace)";
 
     $statement = $db->prepare($query);
-//    $statement->bindValue(':typePlace', $serviceType);
-//    $statement->bindValue(':descriptPlace', $serviceDescription);
-//    $statement->bindValue(':picPlace', $servicePic);
-
     $statement->execute();
     $results = $statement->fetchAll();
     $statement->closeCursor();
@@ -230,17 +232,32 @@ function getAllServices() {
 function getServiceByID($serviceID) {
     global $db;
 
-    $query = "select serviceType, serviceDescription from venue
+    $query = "select serviceType, serviceDescription from services
                         WHERE serviceID = :idPlace";
 
     $statement = $db->prepare($query);
     $statement->bindValue(':idPlace', $serviceID);
 
     $statement->execute();
-    $results = $statement->fetchAll();
+    $results = $statement->fetch();
     $statement->closeCursor();
 
     return $results;
+}
+function getServiceTypeByID($serviceID) {
+    global $db;
+
+    $query = "select serviceType from services
+                        WHERE serviceID = :idPlace";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':idPlace', $serviceID);
+
+    $statement->execute();
+    $results = $statement->fetch();
+    $statement->closeCursor();
+
+    return $results[0];
 }
 
 function insertServices($serviceType, $serviceDescription, $servicePic) {
@@ -275,7 +292,7 @@ function deleteService($serviceID) {
     $statement->closeCursor();
 }
 
-//images functions
+//images functions*********************************************************
 function insertImage($image) {
     global $db;
 
@@ -320,7 +337,7 @@ function deleteFromImages($imageID) {
     $statement->closeCursor();
 }
 
-//user selection functions
+//user selection functions**************************************************
 function insertIntoSelection($userID, $venueID, $serviceID) {
     global $db;
 
@@ -379,7 +396,7 @@ function insertVenueIntoSelection($userID, $venueID) {
     //return $imageId;
 }
 
-//venueService table functions
+//venueService table functions**********************************************
 function getVenueServiceByID($venueID) {
     global $db;
 
@@ -391,10 +408,50 @@ function getVenueServiceByID($venueID) {
     $statement->execute();
     $results = $statement->fetchAll();
     $statement->closeCursor();
+
+    $services = array();
+    foreach ($results as $ser) {
+        $services[] = $ser['serviceID'];
+    }
+
+    return $services;
+}
+
+function joinTables($venueID){
+    global $db;
+    
+    $query = "SELECT serviceType FROM venueservice v JOIN services s 
+        ON v.serviceID = s.serviceID WHERE venueID = :venuePlace";
+    
+    $statement = $db->prepare($query);
+    $statement->bindValue(':venuePlace', $venueID);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
     
     $services = array();
-    foreach ($results as $ser){
-        $services[] = $ser['serviceID'];
+    foreach ($results as $ser) {
+        $services[] = $ser['serviceType'];
+    }
+
+    return $services;
+}
+
+function ServiceName($venueID){
+    global $db;
+    
+    $query = "SELECT serviceType FROM venue v JOIN services s 
+        ON v.serviceID = s.serviceID  WHERE venueID = :venuePlace";
+    
+    $statement = $db->prepare($query);
+    $statement->bindValue(':venuePlace', $venueID);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+    
+    $services = array();
+    foreach ($results as $ser) {
+        $services[] = $ser['serviceType'];
     }
 
     return $services;
