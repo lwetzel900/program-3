@@ -88,36 +88,40 @@ switch ($action) {
             $fName = $_SESSION['user']['fName'];
             $lName = $_SESSION['user']['lName'];
             $userID = $_SESSION['user']['userID'];
-            
+            if (idExistInUserSelection($userID)) {
+                $allTogether = getUserVenueServiceByUserID($userID);
+                $venueName = array_shift($allTogether);
+                var_dump($allTogether);
+            }
             include('userProfile.php');
-            
+
             exit();
         }
-      
-        break;
-        
-        case 'userProfileAfterOptions':
-            $venueID = filter_input(INPUT_POST, 'venue');
-            $_SESSION['venue'] = getVenueNameByID(filter_input(INPUT_POST, 'venue'));
-            $service = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
-            $services = convertServices($service);
-            $_SESSION['choice'] = $services;
-            $fName = $_SESSION['user']['fName'];
-            $lName = $_SESSION['user']['lName'];
-            $userID = $_SESSION['user']['userID'];
-            $venueName = $_SESSION['venue']['name'];
-            //$services = $_SESSION['choice'];
 
-            if (!empty($_SESSION['choice'])) {
+        break;
+
+    case 'userProfileAfterOptions':
+        $venueID = filter_input(INPUT_POST, 'venue');
+        $_SESSION['venue'] = getVenueNameByID(filter_input(INPUT_POST, 'venue'));
+        $service = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+        $services = convertServices($service);
+        $_SESSION['choice'] = $services;
+        $fName = $_SESSION['user']['fName'];
+        $lName = $_SESSION['user']['lName'];
+        $userID = $_SESSION['user']['userID'];
+        $venueName = $_SESSION['venue']['name'];
+        //$services = $_SESSION['choice'];
+
+        if (!empty($_SESSION['choice'])) {
 //                $services = convertServices($service);
 //                $_SESSION['choice'] = $services;
-                foreach ($service as $serv) {
-                    insertIntoSelection($userID, $venueID, $serv);
-                }
+            foreach ($service as $serv) {
+                insertIntoSelection($userID, $venueID, $serv);
             }
-            include('userProfileOptions.php');
+        }
+        include('userProfileOptions.php');
         break;
-        
+
     case'showOptions';
         //$_SESSION['choice'] = array();
 //        $allServices = getAllServices();

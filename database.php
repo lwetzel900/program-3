@@ -244,6 +244,7 @@ function getServiceByID($serviceID) {
 
     return $results;
 }
+
 function getServiceTypeByID($serviceID) {
     global $db;
 
@@ -358,44 +359,100 @@ function insertIntoSelection($userID, $venueID, $serviceID) {
     //return $imageId;
 }
 
-function insertServiceIntoSelection($userID, $serviceID) {
+function getUserVenueServiceByUserID($userID) {
     global $db;
 
-    $query = 'update userselection
-                set serviceID = :servicePlace
-                    WHERE userID = :userPlace';
+    $query = 'SELECT name, serviceType FROM userselection u 
+            JOIN venue v ON u.venueID = v.venueID 
+            JOIN services s ON u.serviceID = s.serviceID 
+            WHERE userID = :userPlace';
 
     $statement = $db->prepare($query);
     $statement->bindValue(':userPlace', $userID);
-//    $statement->bindValue(':venuePlace', $venueID);
-    $statement->bindValue(':servicePlace', $serviceID);
 
     $statement->execute();
-    //$imageId = $db->lastInsertId();
+    $results = $statement->fetchAll();
     $statement->closeCursor();
 
-    //return $imageId;
+    $services = array();
+    $services[] = $results[0]['name'];
+    foreach ($results as $ser) {
+
+        $services[] = $ser['serviceType'];
+    }
+
+    return $services;
 }
 
-function insertVenueIntoSelection($userID, $venueID) {
+function idExistInUserSelection($userID) {
     global $db;
 
-    $query = 'update userselection
-                set venueID = :venuePlace
-                    WHERE userID = :userPlace';
+    $query = "SELECT * FROM userselection WHERE userID = :userPlace";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userPlace', $userID);
+
+    $statement->execute();
+    $results = $statement->fetchAll(); //returns results of select statement if anything
+    $statement->closeCursor();
+
+    if (empty($results)) {//if results is empty than return flase
+        $exists = false;
+    } else {//if results has something return true
+        $exists = true;
+    }
+
+    return $exists;
+}
+
+function deleteIDUserSelection($userID) {
+    global $db;
+
+    $query = 'DELETE FROM userselection
+              WHERE userID = :userPlace';
 
     $statement = $db->prepare($query);
     $statement->bindValue(':userPlace', $userID);
-    $statement->bindValue(':venuePlace', $venueID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+//function insertServiceIntoSelection($userID, $serviceID) {
+//    global $db;
+//
+//    $query = 'update userselection
+//                set serviceID = :servicePlace
+//                    WHERE userID = :userPlace';
+//
+//    $statement = $db->prepare($query);
+//    $statement->bindValue(':userPlace', $userID);
+////    $statement->bindValue(':venuePlace', $venueID);
 //    $statement->bindValue(':servicePlace', $serviceID);
-
-    $statement->execute();
-    //$imageId = $db->lastInsertId();
-    $statement->closeCursor();
-
-    //return $imageId;
-}
-
+//
+//    $statement->execute();
+//    //$imageId = $db->lastInsertId();
+//    $statement->closeCursor();
+//
+//    //return $imageId;
+//}
+//
+//function insertVenueIntoSelection($userID, $venueID) {
+//    global $db;
+//
+//    $query = 'update userselection
+//                set venueID = :venuePlace
+//                    WHERE userID = :userPlace';
+//
+//    $statement = $db->prepare($query);
+//    $statement->bindValue(':userPlace', $userID);
+//    $statement->bindValue(':venuePlace', $venueID);
+////    $statement->bindValue(':servicePlace', $serviceID);
+//
+//    $statement->execute();
+//    //$imageId = $db->lastInsertId();
+//    $statement->closeCursor();
+//
+//    //return $imageId;
+//}
 //venueService table functions**********************************************
 function getVenueServiceByID($venueID) {
     global $db;
@@ -417,18 +474,18 @@ function getVenueServiceByID($venueID) {
     return $services;
 }
 
-function joinTables($venueID){
+function joinTables($venueID) {
     global $db;
-    
+
     $query = "SELECT serviceType FROM venueservice v JOIN services s 
         ON v.serviceID = s.serviceID WHERE venueID = :venuePlace";
-    
+
     $statement = $db->prepare($query);
     $statement->bindValue(':venuePlace', $venueID);
     $statement->execute();
     $results = $statement->fetchAll();
     $statement->closeCursor();
-    
+
     $services = array();
     foreach ($results as $ser) {
         $services[] = $ser['serviceType'];
@@ -437,18 +494,18 @@ function joinTables($venueID){
     return $services;
 }
 
-function ServiceName($venueID){
+function ServiceName($venueID) {
     global $db;
-    
+
     $query = "SELECT serviceType FROM venue v JOIN services s 
         ON v.serviceID = s.serviceID  WHERE venueID = :venuePlace";
-    
+
     $statement = $db->prepare($query);
     $statement->bindValue(':venuePlace', $venueID);
     $statement->execute();
     $results = $statement->fetchAll();
     $statement->closeCursor();
-    
+
     $services = array();
     foreach ($results as $ser) {
         $services[] = $ser['serviceType'];

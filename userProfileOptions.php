@@ -6,7 +6,7 @@
     <?PHP if (empty($_SESSION['choice'])) : ?>
         <p>Please click options to choose your venue and services</p><br>
     <?php else: ?>
-        
+
         <p>your options</p><br>
         <p><?php echo htmlspecialchars("$venueName") ?></p>
 
@@ -14,8 +14,9 @@
             <p><?php echo htmlspecialchars("$serv") ?></p>
         <?php endforeach; ?>
         <br>
-        
+
     <?php endif; ?>
+
     <p><a href=".?action=showOptions">options</a></p>
     <p><a href=".?action=logout">Logout</a></p>
 </main>
