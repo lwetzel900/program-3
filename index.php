@@ -1,7 +1,7 @@
 <?php
 
 //some of this taken from group project
-session_set_cookie_params(600, '/');
+session_set_cookie_params(6000, '/');
 session_start();
 require_once('database.php');
 require_once ('valid.php');
@@ -83,7 +83,7 @@ switch ($action) {
             header("Location: ?action=userProfile");
             exit();
         } else {
-            $errorMessage = "Invalid username password combination";
+            $errorMessage = "Invalid password ";
             include('userLogin.php');
             exit();
         }
@@ -100,7 +100,9 @@ switch ($action) {
 
             if (idExistInUserSelection($userID)) {
                 $allTogether = getUserVenueServiceByUserID($userID);
-                $venueName = array_shift($allTogether);
+                //$count1 = count($allTogether[]);
+                
+                //var_dump(count($allTogether['Fox Center']));
                 var_dump($allTogether);
             }
             include('userProfile.php');
@@ -114,24 +116,38 @@ switch ($action) {
         $fName = $_SESSION['user']['fName'];
         $lName = $_SESSION['user']['lName'];
         $userID = $_SESSION['user']['userID'];
-        
+
         $venueID = filter_input(INPUT_POST, 'venue');
         $venueName = getVenueNameByID($venueID);
+        $_SESSION['venue'] = $venueID;
+        $venueServices = joinTables($venueID);
+        include ('showServiceOptions.php');
+        //header("Location: ?action=selectServices");
+        break;
+
+    case'selectServices':
+        
+        var_dump($venueServices);
+        $fName = $_SESSION['user']['fName'];
+        $lName = $_SESSION['user']['lName'];
+        $userID = $_SESSION['user']['userID'];
+deleteIDUserSelection($userID, $_SESSION['venue']);
+        // $venueServices = joinTables($_SESSION['venue']);
+
         $service = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
         $servicesSelected = convertServices($service);
 
+
         if (!empty($servicesSelected)) {
             foreach ($service as $serv) {
-                insertIntoSelection($userID, $venueID, $serv);
+                insertIntoSelection($_SESSION['user']['userID'], $_SESSION['venue'], $serv);
             }
         }
-
         header("Location: ?action=userProfile");
         break;
-        
-        
-            case'showOptions';
-        include ('showOptions.php');
+
+    case'showOptions';
+        include ('showVenueOptions.php');
         break;
 //    case 'userProfileAfterOptions':
 //        $venueID = filter_input(INPUT_POST, 'venue');
@@ -151,7 +167,6 @@ switch ($action) {
 //        
 //        include('userProfileOptions.php');
 //        break;
-
 //    case 'selectVenue':
 //        $venueID = filter_input(INPUT_POST, 'venue');
 //        $venueName = getVenueNameByID($venueID);
@@ -170,11 +185,6 @@ switch ($action) {
 //
 //        include('userProfile.php');
 //        break;
-
-
-
-
-
 //visitor views  
     case 'visitorShow':
 

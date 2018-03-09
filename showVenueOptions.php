@@ -38,14 +38,14 @@
         <input type="submit" value="Select">
     </form>
 
-        <h2>Select a service</h2>
+<!--        <h2>Select a service</h2>
 
         <table>
             <tr>
 
                 <th>Service Type</th>
                 <th>Description</th>
-                <!--<th>Picture</th>-->
+                <th>Picture</th>
                 <th>&nbsp;</th>
             </tr>
 
@@ -53,16 +53,16 @@
                 <tr>
                     <td><?php echo htmlspecialchars($service['serviceType']) ?></td>
                     <td><?php echo htmlspecialchars($service['serviceDescription']) ?></td>
-                    <!--<td><image src="<?php echo htmlspecialchars($service['servicePic']); ?>" height="120" width="180"</td>-->
+                    <td><image src="<?php echo htmlspecialchars($service['servicePic']); ?>" height="120" width="180"</td>
 
                     <td>
-                        <!--                    <form action="." method="post">
+                                            <form action="." method="post">
                                                 <input type="hidden" name="action" value="selectServices">
-                                                <input type="hidden" name="serviceID" value="<?php echo htmlspecialchars($service['serviceID']); ?>">-->
-                            <!--                        <input type="hidden" name="imageID"
-                                                       value="<?php echo htmlspecialchars($pic['imageID']); ?>">-->
+                                                <input type="hidden" name="serviceID" value="<?php echo htmlspecialchars($service['serviceID']); ?>">
+                                                    <input type="hidden" name="imageID"
+                                                       value="<?php echo htmlspecialchars($pic['imageID']); ?>">
                         <input type="checkbox" name="services[]" value="<?php echo htmlspecialchars($service['serviceID']); ?>">
-                        <!--                    </form>-->
+                                            </form>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -70,7 +70,7 @@
 
 
         <input type="submit" value="Select">
-    </form>
+    </form>-->
     <p><a href=".?action=logout">Logout</a></p>
 </main>
 <?php include 'view/footer.php'; ?>

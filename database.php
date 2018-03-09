@@ -67,10 +67,10 @@ function getUserByEmail($email) {
     $statement->bindValue(':emailPlace', $email);
 
     $statement->execute();
-    $results = $statement->fetch();
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
 
-    return $results;
+    return $results[0];
 }
 
 function getUserByID($userID) {
@@ -83,10 +83,10 @@ function getUserByID($userID) {
     $statement->bindValue(':idPlace', $userID);
 
     $statement->execute();
-    $results = $statement->fetch();
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
 
-    return $results;
+    return $results[0];
 }
 
 function getAllUsers() {
@@ -109,18 +109,12 @@ function emailExists($email) {
     $query = "SELECT * FROM users WHERE email = :emailPlace";
     $statement = $db->prepare($query);
     $statement->bindValue(':emailPlace', $email);
-
-    $statement->execute();
+//the execute method returns a boolean TRUE on success or FALSE on failure.
+    $success = $statement->execute();
     $results = $statement->fetchAll(); //returns results of select statement if anything
     $statement->closeCursor();
 
-    if (empty($results)) {//if results is empty than return flase
-        $exists = false;
-    } else {//if results has something return true
-        $exists = true;
-    }
-
-    return $exists;
+    return $success;
 }
 
 //admin functions*************************************************************
@@ -362,56 +356,56 @@ function insertIntoSelection($userID, $venueID, $serviceID) {
 function getUserVenueServiceByUserID($userID) {
     global $db;
 
-    $query = 'SELECT name, serviceType FROM userselection u 
-            JOIN venue v ON u.venueID = v.venueID 
-            JOIN services s ON u.serviceID = s.serviceID 
-            WHERE userID = :userPlace';
+    $query = 'SELECT name, serviceType 
+                FROM userselection u 
+                JOIN venue v ON u.venueID = v.venueID 
+                JOIN services s ON u.serviceID = s.serviceID 
+                WHERE userID = :userPlace';
 
     $statement = $db->prepare($query);
     $statement->bindValue(':userPlace', $userID);
 
     $statement->execute();
-    $results = $statement->fetchAll();
+    $results = $statement->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
     $statement->closeCursor();
 
-    $services = array();
-    $services[] = $results[0]['name'];
-    foreach ($results as $ser) {
 
-        $services[] = $ser['serviceType'];
-    }
-
-    return $services;
+//    $services;
+//    $services[] = $results[0]['name'];
+//    foreach ($results as $ser) {
+//        
+//        $services[] = $ser;
+//    }
+//    return $services;
+//    
+        return $results;
 }
 
 function idExistInUserSelection($userID) {
     global $db;
 
-    $query = "SELECT * FROM userselection WHERE userID = :userPlace";
+    $query = "SELECT * FROM userselection 
+        WHERE userID = :userPlace";
     $statement = $db->prepare($query);
     $statement->bindValue(':userPlace', $userID);
-
-    $statement->execute();
+//the execute method returns a boolean TRUE on success or FALSE on failure.
+    $success = $statement->execute();
     $results = $statement->fetchAll(); //returns results of select statement if anything
     $statement->closeCursor();
 
-    if (empty($results)) {//if results is empty than return flase
-        $exists = false;
-    } else {//if results has something return true
-        $exists = true;
-    }
-
-    return $exists;
+    return $success;
 }
 
-function deleteIDUserSelection($userID) {
+function deleteIDUserSelection($userID, $venueID) {
     global $db;
 
     $query = 'DELETE FROM userselection
-              WHERE userID = :userPlace';
+              WHERE userID = :userPlace and
+              venueID = :venuePlace';
 
     $statement = $db->prepare($query);
     $statement->bindValue(':userPlace', $userID);
+    $statement->bindValue(':venuePlace', $venueID);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -477,7 +471,7 @@ function getVenueServiceByID($venueID) {
 function joinTables($venueID) {
     global $db;
 
-    $query = "SELECT serviceType FROM venueservice v JOIN services s 
+    $query = "SELECT * FROM venueservice v JOIN services s 
         ON v.serviceID = s.serviceID WHERE venueID = :venuePlace";
 
     $statement = $db->prepare($query);
@@ -486,12 +480,7 @@ function joinTables($venueID) {
     $results = $statement->fetchAll();
     $statement->closeCursor();
 
-    $services = array();
-    foreach ($results as $ser) {
-        $services[] = $ser['serviceType'];
-    }
-
-    return $services;
+    return $results;
 }
 
 function ServiceName($venueID) {
