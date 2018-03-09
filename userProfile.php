@@ -4,7 +4,7 @@
     <p>Welcome <?php echo htmlspecialchars("$fName $lName") ?></p><br>
     <?PHP if (empty($allTogether)) : ?>
         <p>You haven't picked out anything yet...</p><br>
-        <p>Please click options to choose your venue and services</p><br>
+        <p>Please choose some <a href=".?action=showOptions">options</a> from our venues and services</p><br>
     <?php else: ?>
 
         <p>your options</p><br>

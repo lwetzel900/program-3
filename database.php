@@ -14,7 +14,7 @@ try {
     exit();
 }
 
-//user database functions
+//user database functions***************************************************************************************
 //insert user into table
 function insertUser($fName, $lName, $email, $address, $city, $zip, $phone, $password) {
     global $db;
@@ -163,7 +163,7 @@ function getVenueByID($venueID) {
     $results = $statement->fetch();
     $statement->closeCursor();
 
-    return $results;
+    return $results[0];
 }
 
 function getVenueNameByID($venueID) {
@@ -179,7 +179,7 @@ function getVenueNameByID($venueID) {
     $results = $statement->fetch();
     $statement->closeCursor();
 
-    return $results;
+    return $results[0];
 }
 
 function insertVenue($name, $city, $state, $venuePic) {

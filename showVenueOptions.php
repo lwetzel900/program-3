@@ -2,7 +2,8 @@
 <main>
     <br>
 
-    <form action="?action=userProfileAfterOptions" method="post">
+    <form action="" method="post">
+        <input type="hidden" name="action" value="selectVenue"
         <h2>Select a venue</h2>
 
         <table>
@@ -33,6 +34,9 @@
                 </tr>
             <?php endforeach; ?>
         </table><br>
+        
+        <input type="submit" value="Select">
+    </form>
 
         <h2>Select a service</h2>
 
@@ -64,7 +68,7 @@
             <?php endforeach; ?>
         </table><br>
 
-<!--<input type="hidden" name="action" value="selectService">-->
+
         <input type="submit" value="Select">
     </form>
     <p><a href=".?action=logout">Logout</a></p>

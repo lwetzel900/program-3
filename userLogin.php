@@ -3,10 +3,12 @@
     <br>
     <p><a href=".?action=register">Create</a> an account to save all your information or login to
         view what you have already created.</p>
+        
     <h2><?php echo htmlspecialchars($errorMessage) ?></h2>
 
-    <br><br>
-    <form action="" method="post" id="aligned">
+    <br>
+    <form action="." method="post" id="aligned">
+
         <!--for the control-->
         <input type="hidden" name="action" value="userLogin">
 

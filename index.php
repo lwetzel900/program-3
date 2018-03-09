@@ -25,6 +25,7 @@ switch ($action) {
         break;
 //registration
     case 'register':
+        $errorMessage = "";
         $firstName = "";
         $lastName = "";
         $email = "";
@@ -44,10 +45,18 @@ switch ($action) {
         $zip = filter_input(INPUT_POST, 'zip');
         $phone = filter_input(INPUT_POST, 'phone');
         $password = filter_input(INPUT_POST, 'password');
-        insertUser($firstName, $lastName, $email, $address, $city, $zip, $phone, hashPassword($password));
-        //exit();
-        $_SESSION['user'] = getUserByEmail($email);
-        header("Location: ?action=userProfile");
+
+        if (empty($firstName) || empty($lastName) || empty($address) || empty($city) ||
+                empty($zip) || empty($phone) || $email === NULL || $email === FALSE || empty($password)) {
+            $errorMessage = "invalid Data";
+            include('registration.php');
+        } else {
+            insertUser($firstName, $lastName, $email, $address, $city, $zip, $phone, hashPassword($password));
+            $_SESSION['user'] = getUserByEmail($email);
+            header("Location: ?action=userProfile");
+        }
+
+
         break;
 
 //user views
@@ -59,8 +68,8 @@ switch ($action) {
     case 'userLogin':
         $email = filter_input(INPUT_POST, 'email');
         $password = filter_input(INPUT_POST, 'password');
-
-        if (!empty($email) && emailExists($email)) {
+        var_dump($email);
+        if ($email != NULL && emailExists($email)) {
             $storedPassword = getHashedPassword($email);
         } else {
             $errorMessage = "Invalid email";
@@ -88,6 +97,7 @@ switch ($action) {
             $fName = $_SESSION['user']['fName'];
             $lName = $_SESSION['user']['lName'];
             $userID = $_SESSION['user']['userID'];
+
             if (idExistInUserSelection($userID)) {
                 $allTogether = getUserVenueServiceByUserID($userID);
                 $venueName = array_shift($allTogether);
@@ -100,54 +110,74 @@ switch ($action) {
 
         break;
 
-    case 'userProfileAfterOptions':
-        $venueID = filter_input(INPUT_POST, 'venue');
-        $_SESSION['venue'] = getVenueNameByID(filter_input(INPUT_POST, 'venue'));
-        $service = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
-        $services = convertServices($service);
-        $_SESSION['choice'] = $services;
+    case 'selectVenue':
         $fName = $_SESSION['user']['fName'];
         $lName = $_SESSION['user']['lName'];
         $userID = $_SESSION['user']['userID'];
-        $venueName = $_SESSION['venue']['name'];
-        //$services = $_SESSION['choice'];
+        
+        $venueID = filter_input(INPUT_POST, 'venue');
+        $venueName = getVenueNameByID($venueID);
+        $service = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+        $servicesSelected = convertServices($service);
 
-        if (!empty($_SESSION['choice'])) {
-//                $services = convertServices($service);
-//                $_SESSION['choice'] = $services;
+        if (!empty($servicesSelected)) {
             foreach ($service as $serv) {
                 insertIntoSelection($userID, $venueID, $serv);
             }
         }
-        include('userProfileOptions.php');
-        break;
 
-    case'showOptions';
-        //$_SESSION['choice'] = array();
-//        $allServices = getAllServices();
-//        $allVenues = getAllVenues();
+        header("Location: ?action=userProfile");
+        break;
+        
+        
+            case'showOptions';
         include ('showOptions.php');
         break;
-
-    case 'selectService':
-//        $userID = $_SESSION['user']['userID'];
+//    case 'userProfileAfterOptions':
 //        $venueID = filter_input(INPUT_POST, 'venue');
-//            $_SESSION['venue'] = getVenueNameByID(filter_input(INPUT_POST, 'venue'));
-//            $service = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
-//            $services = convertServices($service);
-//            $_SESSION['choice'] = $services;
+//        $venueName = getVenueNameByID($venueID);
+//        $service = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+//        $servicesSelected = convertServices($service);
+//        
+//        $fName = $_SESSION['user']['fName'];
+//        $lName = $_SESSION['user']['lName'];
+//        $userID = $_SESSION['user']['userID'];
+//
+//        if (!empty($servicesSelected)) {
+//            foreach ($service as $serv) {
+//                insertIntoSelection($userID, $venueID, $serv);
+//            }
+//        }
+//        
+//        include('userProfileOptions.php');
+//        break;
 
-        header("Location: ?action=userProfileAfterOptions");
+//    case 'selectVenue':
+//        $venueID = filter_input(INPUT_POST, 'venue');
+//        $venueName = getVenueNameByID($venueID);
+//        $service = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+//        $servicesSelected = convertServices($service);
+//
+//        $fName = $_SESSION['user']['fName'];
+//        $lName = $_SESSION['user']['lName'];
+//        $userID = $_SESSION['user']['userID'];
+//
+//        if (!empty($servicesSelected)) {
+//            foreach ($service as $serv) {
+//                insertIntoSelection($userID, $venueID, $serv);
+//            }
+//        }
+//
+//        include('userProfile.php');
+//        break;
 
-        break;
 
-    case 'selectVenue':
-        break;
+
+
 
 //visitor views  
     case 'visitorShow':
-//        $allServices = getAllServices();
-//        $allVenues = getAllVenues();
+
         include ('visitorShow.php');
         break;
 
@@ -158,18 +188,11 @@ switch ($action) {
         break;
 }; //end of switch
 
-function convertServices/* ($userID, $venueID, $services) */($services) {
+function convertServices($services) {
     $serviceName = array();
 
     foreach ($services as $serv) {
         $serviceName[] = getServiceTypeByID($serv);
-        //insertIntoSelection($userID, $venueID, $serv);
     }
     return $serviceName;
 }
-
-////taken from group project
-//function hashPassword($password) {
-//    $options = ['cost' => 12];
-//    return password_hash($password, PASSWORD_DEFAULT, $options);
-//}

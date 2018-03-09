@@ -43,6 +43,6 @@
         <?php endforeach; ?>
     </table><br>
     <p><a href=".?action=register">Register</a> for an account to save your options</p>
-    <p><a href=".?action=logout">Home</a></p>
+<!--    <p><a href=".?action=logout">Home</a></p>-->
 </main>
 <?php include 'view/footer.php'; ?>

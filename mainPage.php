@@ -13,8 +13,8 @@
         whether it is for a wedding, reception, birthday, 
         graduation or other life event! I have been doing weddings for many years!  
         I'm happy to do as much or as little as you would like. 
-        Check out the 'Services Provided' page and my 
-        'Gallery' page to see what are some of the things we have to offer!</p>
+        Check out the <a href=".?action=visitorShow">Services Provided</a> page and my 
+        <a href="under_construction.php">Gallery</a> page to see what are some of the things we have to offer!</p>
 
     <ul>
         <li>
@@ -23,9 +23,7 @@
         <li>
             <a href="bossPerson">Admin</a>
         </li>
-        <li>
-            <a href=".?action=visitorShow">Visitors</a>
-        </li>
+        
     </ul>
 </main>
 

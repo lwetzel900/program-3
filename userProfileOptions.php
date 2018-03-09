@@ -3,14 +3,14 @@
     <br>
     <p>Welcome <?php echo htmlspecialchars("$fName $lName") ?></p><br>
 
-    <?PHP if (empty($_SESSION['choice'])) : ?>
+    <?PHP if (empty($servicesSelected)) : ?>
         <p>Please click options to choose your venue and services</p><br>
     <?php else: ?>
 
         <p>your options</p><br>
         <p><?php echo htmlspecialchars("$venueName") ?></p>
 
-        <?php foreach ($services as $serv) : ?>
+        <?php foreach ($servicesSelected as $serv) : ?>
             <p><?php echo htmlspecialchars("$serv") ?></p>
         <?php endforeach; ?>
         <br>
