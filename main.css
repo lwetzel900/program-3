@@ -60,7 +60,7 @@ form {
     margin-right: 1em;
     margin-bottom: .5em;
 }
-#aligned input {
+#aligned input, textarea {
     float: left;
     margin-bottom: .5em;
 }
@@ -71,6 +71,7 @@ form {
     margin-left: .5em;
     width: 15em;
 }
+
 table {
     
     border-collapse: collapse;
@@ -96,4 +97,8 @@ nav ul {
 }
 nav ul li {
     padding-bottom: 0.5em;
+}
+textarea{
+    columns: 21;
+    rows: 5;
 }

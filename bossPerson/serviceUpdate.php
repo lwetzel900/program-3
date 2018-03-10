@@ -8,6 +8,7 @@
             <th>Description</th>
             <!--<th>Picture</th>-->
             <th>&nbsp;</th>
+            <th>&nbsp;</th>
         </tr>
 
         <?php foreach ($allServices as $service) : ?>
@@ -24,6 +25,11 @@
                                value="<?php echo htmlspecialchars($pic['imageID']); ?>">-->
                         <input type="submit" value="Delete">
                     </form></td>
+                    <td><form action="." method="post">
+                        <input type="hidden" name="action" value="editServiceView">
+                        <input type="hidden" name="serviceID" value="<?php echo htmlspecialchars($service['serviceID']); ?>">
+                        <input type="submit" value="Edit">
+                    </form></td>
             </tr>
         <?php endforeach; ?>
     </table><br>
@@ -36,7 +42,7 @@
         <input type="text" name="type"> 
         <br>
         <label>Description:</label>
-        <input type="text" name="description"> 
+        <textarea cols="21" rows="5" name='description' ></textarea>
         <br>
         <label>Venue Offered:</label>
         <select name="venueSelect">

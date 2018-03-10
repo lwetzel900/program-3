@@ -233,7 +233,7 @@ function getServiceByID($serviceID) {
     $statement->bindValue(':idPlace', $serviceID);
 
     $statement->execute();
-    $results = $statement->fetch();
+    $results = $statement->fetch(PDO::FETCH_ASSOC);
     $statement->closeCursor();
 
     return $results;
@@ -503,6 +503,21 @@ function joinTables($venueID) {
     $statement->bindValue(':venuePlace', $venueID);
     $statement->execute();
     $results = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $results;
+}
+
+function VenueName($serviceID) {
+    global $db;
+
+    $query = "SELECT name FROM venueservice vs JOIN venue v
+        ON vs.venueID = v.venueID WHERE serviceID = :servicePlace";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':servicePlace', $serviceID);
+    $statement->execute();
+    $results = $statement->fetchAll(PDO::FETCH_COLUMN);
     $statement->closeCursor();
 
     return $results;
