@@ -98,12 +98,14 @@ switch ($action) {
             $lName = $_SESSION['user']['lName'];
             $userID = $_SESSION['user']['userID'];
 
+//**************************************put method here to use function******************
+
             if (idExistInUserSelection($userID)) {
-                $allTogether = getUserVenueServiceByUserID($userID);
+                $venueIDs = getVenueIdFromVenueService($userID);
+                $allTogether = getUserVenueServiceByUserID($userID,$venueID);
                 //$count1 = count($allTogether[]);
-                
                 //var_dump(count($allTogether['Fox Center']));
-                var_dump($allTogether);
+                //var_dump($venueIDs);
             }
             include('userProfile.php');
 
@@ -126,12 +128,12 @@ switch ($action) {
         break;
 
     case'selectServices':
-        
+
         var_dump($venueServices);
         $fName = $_SESSION['user']['fName'];
         $lName = $_SESSION['user']['lName'];
         $userID = $_SESSION['user']['userID'];
-deleteIDUserSelection($userID, $_SESSION['venue']);
+        deleteIDUserSelection($userID, $_SESSION['venue']);
         // $venueServices = joinTables($_SESSION['venue']);
 
         $service = filter_input(INPUT_POST, 'services', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);

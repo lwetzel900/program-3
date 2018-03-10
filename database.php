@@ -20,8 +20,8 @@ function insertUser($fName, $lName, $email, $address, $city, $zip, $phone, $pass
     global $db;
 
     $query = "insert into users
-                    (fName, lName, email, address, city, zip, phone, password) 
-                    VALUES 
+                    (fName, lName, email, address, city, zip, phone, password)
+                    VALUES
                     (:fNamePlace, :lNamePlace, :emailPlace, :addressPlace, :cityPlace, :zipPlace, :phonePlace, :passwordPlace)";
 
     $statement = $db->prepare($query);
@@ -60,7 +60,7 @@ function getHashedPassword($email) {
 function getUserByEmail($email) {
     global $db;
     // not returning the password becuase we probably shouldn't.
-    $query = "SELECT userID, fName, lName, email 
+    $query = "SELECT userID, fName, lName, email
                 FROM users WHERE email = :emailPlace";
 
     $statement = $db->prepare($query);
@@ -180,8 +180,8 @@ function insertVenue($name, $city, $state, $venuePic) {
     global $db;
 
     $query = "insert into venue
-                    (name, city, state, venuePic) 
-                    VALUES 
+                    (name, city, state, venuePic)
+                    VALUES
                     (:namePlace, :cityPlace, :statePlace, :picPlace)";
 
     $statement = $db->prepare($query);
@@ -259,8 +259,8 @@ function insertServices($serviceType, $serviceDescription, $servicePic) {
     global $db;
 
     $query = "insert into services
-                    (serviceType, serviceDescription, servicePic) 
-                    VALUES 
+                    (serviceType, serviceDescription, servicePic)
+                    VALUES
                     (:typePlace, :descriptPlace, :picPlace)";
 
     $statement = $db->prepare($query);
@@ -292,8 +292,8 @@ function insertImage($image) {
     global $db;
 
     $query = "insert into images
-                    (galleryImages) 
-                    VALUES 
+                    (galleryImages)
+                    VALUES
                     (:imagePlace)";
 
     $statement = $db->prepare($query);
@@ -337,8 +337,8 @@ function insertIntoSelection($userID, $venueID, $serviceID) {
     global $db;
 
     $query = 'insert into userselection
-                    (userID, venueID, serviceID) 
-                    VALUES 
+                    (userID, venueID, serviceID)
+                    VALUES
                     (:userPlace, :venuePlace, :servicePlace)';
 
     $statement = $db->prepare($query);
@@ -353,38 +353,61 @@ function insertIntoSelection($userID, $venueID, $serviceID) {
     //return $imageId;
 }
 
-function getUserVenueServiceByUserID($userID) {
+function getVenueIdFromVenueService($userID) {
     global $db;
 
-    $query = 'SELECT name, serviceType 
-                FROM userselection u 
-                JOIN venue v ON u.venueID = v.venueID 
-                JOIN services s ON u.serviceID = s.serviceID 
+    $query = 'select venueID
+                from userselection
                 WHERE userID = :userPlace';
 
     $statement = $db->prepare($query);
     $statement->bindValue(':userPlace', $userID);
-
     $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
+    $results = $statement->fetchAll();
     $statement->closeCursor();
 
+    //return $results;
+    
+    foreach ($results as $ser) {
+
+        $services[] = $ser;
+    }
+    return $services;
+}
+
+function getUserVenueServiceByUserID($userID, $venueID) {
+    global $db;
+
+    $query = 'SELECT name, serviceType
+                FROM userselection u
+                JOIN venue v ON u.venueID = v.venueID
+                JOIN services s ON u.serviceID = s.serviceID
+                WHERE userID = :userPlace
+                and venueID = :venuePlace';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userPlace', $userID);
+    $statement->bindValue(':venuePlace', $venueID);
+
+    $statement->execute();
+    $results = $statement->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_GROUP);
+    $statement->closeCursor();
 
 //    $services;
 //    $services[] = $results[0]['name'];
 //    foreach ($results as $ser) {
-//        
+//
 //        $services[] = $ser;
 //    }
 //    return $services;
-//    
-        return $results;
+
+    return $results;
 }
 
 function idExistInUserSelection($userID) {
     global $db;
 
-    $query = "SELECT * FROM userselection 
+    $query = "SELECT * FROM userselection
         WHERE userID = :userPlace";
     $statement = $db->prepare($query);
     $statement->bindValue(':userPlace', $userID);
@@ -471,7 +494,7 @@ function getVenueServiceByID($venueID) {
 function joinTables($venueID) {
     global $db;
 
-    $query = "SELECT * FROM venueservice v JOIN services s 
+    $query = "SELECT * FROM venueservice v JOIN services s
         ON v.serviceID = s.serviceID WHERE venueID = :venuePlace";
 
     $statement = $db->prepare($query);
@@ -486,7 +509,7 @@ function joinTables($venueID) {
 function ServiceName($venueID) {
     global $db;
 
-    $query = "SELECT serviceType FROM venue v JOIN services s 
+    $query = "SELECT serviceType FROM venue v JOIN services s
         ON v.serviceID = s.serviceID  WHERE venueID = :venuePlace";
 
     $statement = $db->prepare($query);

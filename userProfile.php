@@ -3,6 +3,7 @@
     <br>
     <p>Welcome <?php echo htmlspecialchars("$fName $lName") ?></p>
     <br>
+    <input type="hidden" name="action" value="userProfile">
     <?PHP if (empty($allTogether)) : ?>
         <p>You haven't picked out anything yet...</p>
         <br>
