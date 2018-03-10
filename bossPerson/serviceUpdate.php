@@ -38,6 +38,15 @@
         <label>Description:</label>
         <input type="text" name="description"> 
         <br>
+        <label>Venue Offered:</label>
+        <select name="venueSelect">
+            <?php foreach ($allVenues as $ven) : ?>
+            <option value="<?php echo htmlspecialchars($ven['venueID'])?>">
+                <?php echo htmlspecialchars($ven['name'])?></option>
+            <?php endforeach; ?>
+        </select>
+            <br>
+            
         <!--        <label>Picture:</label>
                 <input type="text" name="pic"> 
                 <br>-->

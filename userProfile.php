@@ -12,21 +12,20 @@
     <?php else: ?>
         <p>your options</p>
         <br>
-        <table>
-            <tr>
-                <?php foreach ($allTogether as $key => $something) : ?>
-                    <th><?php echo htmlspecialchars("$key") ?></th>
-                <?php endforeach; ?>
-                    <th>&nbsp;</th>
-            </tr>
-            <?php foreach ($allTogether as $row) : ?>
+        <?php foreach ($allTogether as $key => $something) : ?>
+            <table>
                 <tr>
-                    <?php foreach ($row as $key => $val): ?>
-                        <td><?php echo htmlspecialchars("$val") ?></td>
-                    <?php endforeach; ?>
+                    <th><?php echo htmlspecialchars("$key") ?></th>
                 </tr>
-            <?php endforeach; ?>
-        </table>
+
+                <?php foreach ($something as $key => $val): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars("$val") ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+            <br>
+        <?php endforeach; ?>
     <?PHP endif; ?>
     <br>
     <p><a href=".?action=showOptions">options</a></p>

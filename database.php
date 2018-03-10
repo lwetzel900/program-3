@@ -138,7 +138,7 @@ function getAllVenues() {
 
     $statement = $db->prepare($query);
     $statement->execute();
-    $results = $statement->fetchAll();
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
 
     return $results;
@@ -269,10 +269,10 @@ function insertServices($serviceType, $serviceDescription, $servicePic) {
     $statement->bindValue(':picPlace', $servicePic);
 
     $statement->execute();
-    //$imageId = $db->lastInsertId();
+    $serviceId = $db->lastInsertId();
     $statement->closeCursor();
 
-    //return $imageId;
+    return $serviceId;
 }
 
 function deleteService($serviceID) {
@@ -356,50 +356,34 @@ function insertIntoSelection($userID, $venueID, $serviceID) {
 function getVenueIdFromVenueService($userID) {
     global $db;
 
-    $query = 'select venueID
+    $query = 'select distinct venueID
                 from userselection
                 WHERE userID = :userPlace';
 
     $statement = $db->prepare($query);
     $statement->bindValue(':userPlace', $userID);
     $statement->execute();
-    $results = $statement->fetchAll();
+    $results = $statement->fetchAll(PDO::FETCH_COLUMN);
     $statement->closeCursor();
 
-    //return $results;
-    
-    foreach ($results as $ser) {
-
-        $services[] = $ser;
-    }
-    return $services;
+    return $results;
 }
 
-function getUserVenueServiceByUserID($userID, $venueID) {
+function getUserVenueServiceByUserID($userID) {
     global $db;
 
-    $query = 'SELECT name, serviceType
+    $query = 'SELECT v.name, s.serviceType
                 FROM userselection u
                 JOIN venue v ON u.venueID = v.venueID
                 JOIN services s ON u.serviceID = s.serviceID
-                WHERE userID = :userPlace
-                and venueID = :venuePlace';
+                WHERE userID = :userPlace';
 
     $statement = $db->prepare($query);
     $statement->bindValue(':userPlace', $userID);
-    $statement->bindValue(':venuePlace', $venueID);
 
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_GROUP);
     $statement->closeCursor();
-
-//    $services;
-//    $services[] = $results[0]['name'];
-//    foreach ($results as $ser) {
-//
-//        $services[] = $ser;
-//    }
-//    return $services;
 
     return $results;
 }
@@ -413,7 +397,7 @@ function idExistInUserSelection($userID) {
     $statement->bindValue(':userPlace', $userID);
 //the execute method returns a boolean TRUE on success or FALSE on failure.
     $success = $statement->execute();
-    $results = $statement->fetchAll(); //returns results of select statement if anything
+    $statement->fetchAll(); //returns results of select statement if anything
     $statement->closeCursor();
 
     return $success;
@@ -489,6 +473,24 @@ function getVenueServiceByID($venueID) {
     }
 
     return $services;
+}
+function insertVenueService($venueID, $serviceID){
+    global $db;
+    
+    $query = 'insert into venueservice
+                    (venueID, serviceID)
+                    VALUES
+                    (:venuePlace, :servicePlace)';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':venuePlace', $venueID);
+    $statement->bindValue(':servicePlace', $serviceID);
+
+    $statement->execute();
+    //$imageId = $db->lastInsertId();
+    $statement->closeCursor();
+
+    //return $imageId;
 }
 
 function joinTables($venueID) {

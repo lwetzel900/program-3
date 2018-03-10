@@ -28,30 +28,36 @@ switch ($action) {
             exit();
         }
         break;
+        
     case 'adminWork':
         $galleryImages = getAllImages();
         include ('adminWork.php');
         break;
+    
 //admin user view
     case 'userUpdate':
         $allUsers = getAllUsers();
         include('manageUser.php');
         break;
+    
     case 'deleteUser':
         $userID = filter_input(INPUT_POST, 'userID');
         deleteUser($userID);
         header("Location: ?action=userUpdate");
         break;
+    
 //venue views
     case 'venueUpdate':
         $allVenues = getAllVenues();
         include('venueUpdate.php');
         break;
+    
     case 'deleteVenue':
         $venueID = filter_input(INPUT_POST, 'venueID');
         deleteVenue($venueID);
         header("Location: ?action=venueUpdate");
         break;
+    
     case 'venueAdd':
         $vName = filter_input(INPUT_POST, 'name');
         $vCity = filter_input(INPUT_POST, 'city');
@@ -61,24 +67,35 @@ switch ($action) {
         insertVenue($vName, $vCity, $vState, $vPic);
         header("Location: ?action=venueUpdate");
         break;
+    
 //service views
     case 'servicesUpdate':
         $allServices = getAllServices();
+        $allVenues = getAllVenues();
+        var_dump($venueID,$allVenues);
         include('serviceUpdate.php');
         break;
+    
     case 'deleteService':
         $serviceID = filter_input(INPUT_POST, 'serviceID');
         deleteService($serviceID);
         header("Location: ?action=servicesUpdate");
         break;
+    
     case 'serviceAdd':
         $sType = filter_input(INPUT_POST, 'type');
         $sDescript = filter_input(INPUT_POST, 'description');
         //$sPic = filter_input(INPUT_POST, 'pic');
+        
+        $venueID = filter_input(INPUT_POST, 'venueSelect');
         $sPic = "default";
-        insertServices($sType, $sDescript, $sPic);
+        
+        
+        $serviceID = insertServices($sType, $sDescript, $sPic);
+        insertVenueService($venueID, $serviceID);
         header("Location: ?action=servicesUpdate");
         break;
+    
 //image views and actions
     case 'uploadImage':
         //taken from moodle
@@ -112,6 +129,7 @@ switch ($action) {
         }
         header("Location: ?action=adminWork");
         break;
+        
     case 'deleteImage';
         $imageID = filter_input(INPUT_POST, 'imageID');
         $imageLocation = filter_input(INPUT_POST, 'imageLocation');
@@ -119,6 +137,7 @@ switch ($action) {
         unlink($imageLocation);
         header("Location: ?action=adminWork");
         break;
+    
     case'logout':
         session_unset();
         header("Location: ..");

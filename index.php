@@ -21,7 +21,12 @@ $allVenues = getAllVenues();
 switch ($action) {
 //main action
     case 'main':
+        If (!empty($_SESSION['user'])) {
+            header("Location: ?action=userProfile");
+            exit();
+        };
         include ('mainPage.php');
+        exit();
         break;
 //registration
     case 'register':
@@ -101,17 +106,21 @@ switch ($action) {
 //**************************************put method here to use function******************
 
             if (idExistInUserSelection($userID)) {
-                $venueIDs = getVenueIdFromVenueService($userID);
-                $allTogether = getUserVenueServiceByUserID($userID,$venueID);
-                //$count1 = count($allTogether[]);
-                //var_dump(count($allTogether['Fox Center']));
-                //var_dump($venueIDs);
+//                $venueIDs = getVenueIdFromVenueService($userID);
+//                foreach($venueIDs as $id){
+//                    $venueID = $id;
+//                    $allTogether = getUserVenueServiceByUserID($userID,$venueID);
+//                    //header("Location: ?action=userProfile");
+////                    include('userProfile.php');
+//                }
+
+                $allTogether = getUserVenueServiceByUserID($userID);
+
+                var_dump($allTogether);
             }
             include('userProfile.php');
-
             exit();
         }
-
         break;
 
     case 'selectVenue':
