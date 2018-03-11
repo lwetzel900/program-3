@@ -2,7 +2,7 @@
 <main>
     <br>
 
-    <form action="" method="post">
+    <form id="aligned" action="" method="post">
         <input type="hidden" name="action" value="selectVenue"
         <h2>Select a venue</h2>
 
@@ -34,9 +34,9 @@
                 </tr>
             <?php endforeach; ?>
         </table><br>
-        
+        <label>&nbsp;</label>
         <input type="submit" value="Select">
-    </form>
+    </form><br>
 
 <!--        <h2>Select a service</h2>
 
@@ -71,6 +71,13 @@
 
         <input type="submit" value="Select">
     </form>-->
+
+<form id="aligned" class="cancel" action="." method="post">
+<!--        <label>&nbsp;</label>-->
+        <input type="hidden" name="action" value="userProfile">
+        <input type="submit" value="Cancel">
+    </form><br>
+    
     <p><a href=".?action=logout">Logout</a></p>
 </main>
 <?php include '../view/footer.php'; ?>

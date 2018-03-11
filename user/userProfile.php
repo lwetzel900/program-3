@@ -26,9 +26,9 @@
             </table>
             <br>
         <?php endforeach; ?>
-    <?PHP endif; ?>
-    <br>
-    <p><a href=".?action=showOptions">options</a></p>
+    <?PHP endif; ?><br>
+    
+    <p>To update services at each venue, please pick <a href=".?action=showOptions">options</a></p>
     <p><a href=".?action=logout">Logout</a></p>
 </main>
 <?php include '../view/footer.php'; ?>

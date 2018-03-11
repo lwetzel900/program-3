@@ -29,12 +29,3 @@ switch ($action) {
         include ('visitorShow.php');
         break;
 }; //end of switch
-
-//function convertServices($services) {
-//    $serviceName = array();
-//
-//    foreach ($services as $serv) {
-//        $serviceName[] = getServiceTypeByID($serv);
-//    }
-//    return $serviceName;
-//}

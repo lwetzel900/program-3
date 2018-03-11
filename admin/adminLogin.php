@@ -1,7 +1,7 @@
 <?php include '../view/header.php'; ?>
 <main>
 
-    <p><?php echo $errorMessage; ?></p>
+    <p><?php echo htmlspecialchars($errorMessage); ?></p>
 
     <form action="" method="post" id="aligned">
         <!--for the control-->

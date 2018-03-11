@@ -107,11 +107,14 @@ switch ($action) {
         break;
 
     case 'serviceAdd':
+        $serviceID = filter_input(INPUT_POST, 'ID');
         $sType = filter_input(INPUT_POST, 'type');
         $sDescript = filter_input(INPUT_POST, 'description');
         //$sPic = filter_input(INPUT_POST, 'pic');
+        $venueID = filter_input(INPUT_POST, 'venueSelect');
         $sPic = "default";
         $serviceID = insertServices($sType, $sDescript, $sPic);
+        insertVenueService($venueID, $serviceID);
         header("Location: ?action=servicesUpdate");
         break;
 
@@ -141,7 +144,7 @@ switch ($action) {
                 move_uploaded_file($file_tmp, "images/gallery/" . $file_name);
                 $imageURL = "images/gallery/" . $file_name;
                 insertImage($imageURL);
-                echo "Success";
+                //echo "Success";
             } else {
                 var_dump($errors);
             }

@@ -98,7 +98,7 @@ nav ul {
 nav ul li {
     padding-bottom: 0.5em;
 }
-textarea{
-    columns: 21;
-    rows: 5;
+
+.cancel {
+    margin-top: 10px;
 }

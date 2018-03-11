@@ -51,7 +51,7 @@
             <option value="<?php echo htmlspecialchars($ven['venueID'])?>">
                 <?php echo htmlspecialchars($ven['name'])?></option>
             <?php endforeach; ?>
-        </select>
+        </select><span>NOTE!!!! Maybe make this multiple select</span>
             <br>
             
         <!--        <label>Picture:</label>
@@ -62,6 +62,13 @@
         <input type="submit" value="Add Service"><br>
 
     </form>
+    
+    <form id="aligned" class="cancel" action="." method="post">
+<!--        <label>&nbsp;</label>-->
+        <input type="hidden" name="action" value="adminWork">
+        <input type="submit" value="Cancel">
+    </form><br>
+    
     <p><a href=".?action=adminWork">Admin Home</a> </p>
     <p><a href=".?action=logout">Logout</a></p>
 </main>

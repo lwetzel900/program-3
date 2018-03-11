@@ -19,12 +19,17 @@
                 <option value="<?php echo htmlspecialchars($ven['venueID']) ?>">
                     <?php echo htmlspecialchars($ven['name']) ?></option>
             <?php endforeach; ?>
-        </select><br>
+        </select><span>NOTE!!!! Maybe make this multiple select</span><br>
 
         <label>&nbsp;</label>
         <input type="submit" value="Update">
     </form>
-
+    
+    <form id="aligned" class="cancel" action="." method="post">
+<!--        <label>&nbsp;</label>-->
+        <input type="hidden" name="action" value="adminWork">
+        <input type="submit" value="Cancel">
+    </form><br>
 
 </main>
 <?php include '../view/footer.php'; ?>

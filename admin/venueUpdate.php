@@ -49,8 +49,13 @@
 
         <label>&nbsp;</label>
         <input type="submit" value="Add Venue"><br>
-
     </form>
+    
+    <form id="aligned" class="cancel" action="." method="post">
+<!--        <label>&nbsp;</label>-->
+        <input type="hidden" name="action" value="adminWork">
+        <input type="submit" value="Cancel">
+    </form><br>
     <p><a href=".?action=adminWork">Admin Home</a> </p>
     <p><a href=".?action=logout">Logout</a></p>
 </main>

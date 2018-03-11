@@ -7,9 +7,6 @@ require_once ('../model/valid.php');
 $action = filter_input(INPUT_POST, 'action');
 if ($action === NULL) {
     $action = filter_input(INPUT_GET, 'action');
-//    if (!empty($_SESSION['user'])) {
-//        header("Location: ?action=userProfile");
-//        exit();
         if ($action === NULL) {
             $action = 'viewUserLogin';
         }
@@ -20,13 +17,7 @@ $allServices = getAllServices();
 $allVenues = getAllVenues();
 
 switch ($action) {
-//main action
-//    case '?action=mainPage.php':
-//
-//        include ('mainPage.php');
-//        exit();
-//        break;
-//registration
+
     case 'register':
         $errorMessage = "";
         $firstName = "";
@@ -42,6 +33,7 @@ switch ($action) {
     case 'addUser':
         $firstName = filter_input(INPUT_POST, 'firstName');
         $lastName = filter_input(INPUT_POST, 'lastName');
+        $emailString = filter_input(INPUT_POST, 'email');
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $address = filter_input(INPUT_POST, 'address');
         $city = filter_input(INPUT_POST, 'city');
