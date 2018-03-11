@@ -33,8 +33,9 @@
             </tr>
         <?php endforeach; ?>
     </table><br>
+    
     <p>Add services below</p>
-    <form action="" method="post" id="aligned">
+    <form action="." method="post" id="aligned">
 
         <input type="hidden" name="action" value="serviceAdd">
 
@@ -58,7 +59,7 @@
                 <br>-->
 
         <label>&nbsp;</label>
-        <input type="submit" value="Update"><br>
+        <input type="submit" value="Add Service"><br>
 
     </form>
     <p><a href=".?action=adminWork">Admin Home</a> </p>

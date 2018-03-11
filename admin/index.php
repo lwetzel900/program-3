@@ -1,14 +1,14 @@
 <?php
 
 session_start();
-require_once('../database.php');
-require_once ('../valid.php');
+require_once('../model/database.php');
+require_once ('../model/valid.php');
 
 $action = filter_input(INPUT_POST, 'action');
 if ($action === NULL) {
     $action = filter_input(INPUT_GET, 'action');
     if ($action === NULL) {
-        $action = 'adminView';
+        $action = 'adminLogin';
     }
 }
 
@@ -17,9 +17,9 @@ $allVenues = getAllVenues();
 
 switch ($action) {
 
-    case 'adminView':
+    case 'adminLogin':
         $errorMessage = "";
-        include ('adminHome.php');
+        include ('adminLogin.php');
         exit();
         break;
     case 'admin':
@@ -29,7 +29,7 @@ switch ($action) {
             exit();
         } else {
             $errorMessage = "Stop Playing";
-            include ('adminHome.php');
+            include ('adminLogin.php');
             exit();
         }
         break;
@@ -86,7 +86,6 @@ switch ($action) {
         break;
 
     case 'editServiceView':
-
         $serviceID = filter_input(INPUT_POST, 'serviceID');
         $name = VenueName($serviceID);
         var_dump($name);
@@ -95,15 +94,24 @@ switch ($action) {
         $desription = $_SESSION['service']['serviceDescription'];
         include('editService.php');
         break;
+    
+    case 'updateService':
+        $serviceID = filter_input(INPUT_POST, 'ID');
+        $serviceType = filter_input(INPUT_POST, 'type');
+        $serviceDescription = filter_input(INPUT_POST, 'description');
+        $servicePic = "default";
+        $venueID = filter_input(INPUT_POST, 'venueSelect');
+        updateService($serviceID, $serviceType, $serviceDescription, $servicePic);
+        insertVenueService($venueID, $serviceID);
+        header("Location: ?action=servicesUpdate");
+        break;
 
     case 'serviceAdd':
         $sType = filter_input(INPUT_POST, 'type');
         $sDescript = filter_input(INPUT_POST, 'description');
         //$sPic = filter_input(INPUT_POST, 'pic');
-        $venueID = filter_input(INPUT_POST, 'venueSelect');
         $sPic = "default";
         $serviceID = insertServices($sType, $sDescript, $sPic);
-        insertVenueService($venueID, $serviceID);
         header("Location: ?action=servicesUpdate");
         break;
 

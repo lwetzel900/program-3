@@ -1,8 +1,8 @@
 <?php include '../view/header.php'; ?>
 <main>
     <form action='' method='post' id="aligned">
-        <input type='hidden' name='action' value='serviceUpdate.php'>
-
+        <input type='hidden' name='action' value='updateService'>
+        <input type='hidden' name='ID' value='<?php echo htmlspecialchars($serviceID) ?>'>
         <label>Type: </label>
         <input type='text' name='type' value='<?php echo htmlspecialchars($type) ?>'><br>
 
@@ -13,7 +13,7 @@
         <textarea readonly="true"><?php foreach ($name as $n) : ?><?php echo htmlspecialchars($n) ?>, <?php endforeach; ?></textarea>          
         <br>
 
-        <label>Venue Offered:</label>
+        <label>Venue Offered: </label>
         <select name="venueSelect">
             <?php foreach ($allVenues as $ven) : ?>
                 <option value="<?php echo htmlspecialchars($ven['venueID']) ?>">

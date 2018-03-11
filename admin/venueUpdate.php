@@ -48,7 +48,7 @@
                 <br>-->
 
         <label>&nbsp;</label>
-        <input type="submit" value="Update"><br>
+        <input type="submit" value="Add Venue"><br>
 
     </form>
     <p><a href=".?action=adminWork">Admin Home</a> </p>

@@ -1,4 +1,4 @@
-<?php include 'view/header.php'; ?>
+<?php include '../view/header.php'; ?>
 <body>
     <p>Please register.</p>
     <h2><?php echo htmlspecialchars($errorMessage) ?></h2>
@@ -34,5 +34,5 @@
     </form>
     <br><p><a href=".?action=logout">Home</a></p><br>
 </body>
-<?php include 'view/footer.php'; ?>
+<?php include '../view/footer.php'; ?>
 

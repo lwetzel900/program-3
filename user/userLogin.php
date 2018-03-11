@@ -1,4 +1,4 @@
-<?php include 'view/header.php'; ?>
+<?php include '../view/header.php'; ?>
 <main>
     <br>
     <p><a href=".?action=register">Create</a> an account to save all your information or login to
@@ -23,5 +23,5 @@
     <br><br>
 </main>
 
-<?php include 'view/footer.php'; ?>
+<?php include '../view/footer.php'; ?>
 

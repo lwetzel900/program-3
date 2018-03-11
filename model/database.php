@@ -134,7 +134,8 @@ function deleteUser($userID) {
 function getAllVenues() {
     global $db;
 
-    $query = "select * from venue";
+    $query = "select * from venue
+                order by name";
 
     $statement = $db->prepare($query);
     $statement->execute();
@@ -213,7 +214,8 @@ function deleteVenue($venueID) {
 function getAllServices() {
     global $db;
 
-    $query = "select * from services";
+    $query = "select * from services
+                order by serviceType";
 
     $statement = $db->prepare($query);
     $statement->execute();
@@ -285,6 +287,26 @@ function deleteService($serviceID) {
     $statement->bindValue(':idPlace', $serviceID);
     $statement->execute();
     $statement->closeCursor();
+}
+
+function updateService($serviceID, $serviceType, $serviceDescription, $servicePic) {
+    global $db;
+
+    $query = 'update services
+                set serviceType = :typePlace, serviceDescription = :descriptPlace, servicePic = :picPlace
+                WHERE serviceID = :servicePlace';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':servicePlace', $serviceID);
+    $statement->bindValue(':typePlace', $serviceType);
+    $statement->bindValue(':descriptPlace', $serviceDescription);
+    $statement->bindValue(':picPlace', $servicePic);
+
+    $statement->execute();
+    $serviceId = $db->lastInsertId();
+    $statement->closeCursor();
+
+    return $serviceId;
 }
 
 //images functions*********************************************************
@@ -474,9 +496,10 @@ function getVenueServiceByID($venueID) {
 
     return $services;
 }
-function insertVenueService($venueID, $serviceID){
+
+function insertVenueService($venueID, $serviceID) {
     global $db;
-    
+
     $query = 'insert into venueservice
                     (venueID, serviceID)
                     VALUES
