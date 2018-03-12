@@ -1,31 +1,32 @@
+<?php include 'view/header.php'; ?>
+
+<main>
+    <p>Let me introduce myself! My name is Summer Rose!</p>
+
+    <p>Summerstar Creations, LLC is currently based out of Sidney, Iowa 
+        and provides Event Planning, Coordinating and Decorating Services. 
+        I have been happily married for 13 years and we have two very active 
+        children! I have an Associates in Business Specializing in Event 
+        and Meeting Management, graduating among the top of my class.</p>
+
+    <p>I love everything to do with planning and decorating for events, 
+        whether it is for a wedding, reception, birthday, 
+        graduation or other life event! I have been doing weddings for many years!  
+        I'm happy to do as much or as little as you would like. 
+        Check out the <a href="user/?action=visitorShow">Services Provided</a> page and my 
+        <a href="view/underConstruction.php">Gallery</a> page to see what are some of the things we have to offer!</p>
+
+    <ul>
+        <li>
+            <a href="user">User</a>
+        </li>
+        <li>
+            <a href="admin">Admin</a>
+        </li>
+        
+    </ul>
+</main>
+
 <?php
+include 'view/footer.php';
 
-//some of this taken from group project
-session_set_cookie_params(6000, '/');
-session_start();
-require_once('model/database.php');
-require_once ('model/valid.php');
-
-$action = filter_input(INPUT_POST, 'action');
-if ($action === NULL) {
-    $action = filter_input(INPUT_GET, 'action');
-    if ($action === NULL) {
-        // profile will check to see if the user is logged in and send
-        // them to the profile if they are and the login page if not.
-        $action = 'main';
-    }
-}
-$allServices = getAllServices();
-$allVenues = getAllVenues();
-
-switch ($action) {
-//main action
-    case 'main':
-        include ('mainPage.php');
-        exit();
-        break;
-
-    case 'visitorShow':
-        include ('visitorShow.php');
-        break;
-}; //end of switch

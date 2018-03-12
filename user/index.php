@@ -7,12 +7,12 @@ require_once ('../model/valid.php');
 $action = filter_input(INPUT_POST, 'action');
 if ($action === NULL) {
     $action = filter_input(INPUT_GET, 'action');
-        if ($action === NULL) {
-            $action = 'viewUserLogin';
-        }
+    if ($action === NULL) {
+        $action = 'viewUserLogin';
     }
+}
 //}
-    
+
 $allServices = getAllServices();
 $allVenues = getAllVenues();
 
@@ -20,20 +20,20 @@ switch ($action) {
 
     case 'register':
         $errorMessage = "";
-        $firstName = "";
-        $lastName = "";
-        $email = "";
-        $address = "";
-        $city = "";
-        $zip = "";
-        $phone = "";
-        $password = "";
+//        $firstName = "";
+//        $lastName = "";
+//        $email = "";
+//        $address = "";
+//        $city = "";
+//        $zip = "";
+//        $phone = "";
+//        $password = "";
         include('registration.php');
         break;
     case 'addUser':
         $firstName = filter_input(INPUT_POST, 'firstName');
         $lastName = filter_input(INPUT_POST, 'lastName');
-        $emailString = filter_input(INPUT_POST, 'email');
+//        $emailString = filter_input(INPUT_POST, 'email');
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $address = filter_input(INPUT_POST, 'address');
         $city = filter_input(INPUT_POST, 'city');
@@ -41,17 +41,52 @@ switch ($action) {
         $phone = filter_input(INPUT_POST, 'phone');
         $password = filter_input(INPUT_POST, 'password');
 
-        if (empty($firstName) || empty($lastName) || empty($address) || empty($city) ||
-                empty($zip) || empty($phone) || $email === NULL || $email === FALSE || empty($password)) {
-            $errorMessage = "invalid Data";
-            include('registration.php');
-        } else {
+        switch (TRUE) {
+            case (emailExists($email)):
+                $errorMessage = 'Email is Already Registered';
+                include ('registration.php');
+                break;
+            case(!isValidName($firstName)):
+                $errorMessage = 'Invalid First Name';
+                include ('registration.php');
+//            header("Location: .?action=register");
+                break;
+            case(!isValidName($lastName)):
+                $errorMessage = 'Invalid Last Name';
+                include ('registration.php');
+                break;
+            case (!isValidEmail($email)):
+                $errorMessage = 'Invalid Email';
+                include ('registration.php');
+                break;
+            case(!isValidAddress($address)):
+                $errorMessage = 'Invalid Address';
+                include ('registration.php');
+                break;
+            case(!isValidName($city)):
+                $errorMessage = 'Invalid City';
+                include ('registration.php');
+                break;
+            case(!isValidZip($zip)):
+                $errorMessage = 'Invalid Zip';
+                include ('registration.php');
+                break;
+            case(!isValidPhone($phone)):
+                $errorMessage = 'Invalid Phone';
+                include ('registration.php');
+                break;
+            case(!isValidPassword($password)):
+                $errorMessage = 'Invalid Password';
+                include ('registration.php');
+                break;
+            default :
+                $errorMessage = "";
+        }
+        if (empty($errorMessage)) {
             insertUser($firstName, $lastName, $email, $address, $city, $zip, $phone, hashPassword($password));
             $_SESSION['user'] = getUserByEmail($email);
             header("Location: ?action=userProfile");
         }
-
-
         break;
 
 //user views
@@ -138,7 +173,7 @@ switch ($action) {
         break;
 
     case 'visitorShow':
-        include ('user/visitorShow.php');
+        include ('visitorShow.php');
         break;
 
     case'logout':

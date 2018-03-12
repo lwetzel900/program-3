@@ -109,9 +109,9 @@ function emailExists($email) {
     $query = "SELECT * FROM users WHERE email = :emailPlace";
     $statement = $db->prepare($query);
     $statement->bindValue(':emailPlace', $email);
-//the execute method returns a boolean TRUE on success or FALSE on failure.
+//the execute method returns a boolean TRUE on success if there is a match or FALSE on failure.
     $success = $statement->execute();
-    $results = $statement->fetchAll(); //returns results of select statement if anything
+    $statement->fetchAll(); //returns results of select statement if anything
     $statement->closeCursor();
 
     return $success;

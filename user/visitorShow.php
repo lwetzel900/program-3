@@ -1,4 +1,4 @@
-<?php include 'view/header.php'; ?>
+<?php include '../view/header.php'; ?>
 <main>
     <br>
     <p>We have a variety of venues and services to choose from </p>
@@ -39,7 +39,7 @@
             </tr>
         <?php endforeach; ?>
     </table><br>
-    <p><a href=".?action=register">Register</a> for an account to save your options</p>
+    <p><a href="?action=register">Register</a> for an account to save your options</p>
 
 </main>
-<?php include 'view/footer.php'; ?>
+<?php include '../view/footer.php'; ?>

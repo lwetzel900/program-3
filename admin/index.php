@@ -113,8 +113,8 @@ switch ($action) {
         //$sPic = filter_input(INPUT_POST, 'pic');
         $venueID = filter_input(INPUT_POST, 'venueSelect');
         $sPic = "default";
-        $serviceID = insertServices($sType, $sDescript, $sPic);
-        insertVenueService($venueID, $serviceID);
+        $serviceIDReturned = insertServices($sType, $sDescript, $sPic);
+        insertVenueService($venueID, $serviceIDReturned);
         header("Location: ?action=servicesUpdate");
         break;
 
