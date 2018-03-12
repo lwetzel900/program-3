@@ -14,7 +14,7 @@
             <tr>
                 <td><?php echo htmlspecialchars($service['serviceType']) ?></td>
                 <td><?php echo htmlspecialchars($service['serviceDescription']) ?></td>
-                <td><image src="/<?php echo htmlspecialchars($basedir . '/' . $service['servicePic']); ?>" height="40" width="40"</td>
+                <td><image src="<?php echo htmlspecialchars('/' . $basedir . '/' . $service['servicePic']); ?>" height="40" width="80"</td>
 
                 <td><form action="." method="post">
                         <input type="hidden" name="action" value="deleteService">

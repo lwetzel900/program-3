@@ -322,10 +322,7 @@ function insertImage($image) {
     $statement->bindValue(':imagePlace', $image);
 
     $statement->execute();
-    //$imageId = $db->lastInsertId();
     $statement->closeCursor();
-
-    //return $imageId;
 }
 
 function getAllImages() {
@@ -369,10 +366,7 @@ function insertIntoSelection($userID, $venueID, $serviceID) {
     $statement->bindValue(':servicePlace', $serviceID);
 
     $statement->execute();
-    //$imageId = $db->lastInsertId();
     $statement->closeCursor();
-
-    //return $imageId;
 }
 
 function getVenueIdFromVenueService($userID) {
@@ -476,6 +470,7 @@ function deleteIDUserSelection($userID, $venueID) {
 //
 //    //return $imageId;
 //}
+
 //venueService table functions**********************************************
 function getVenueServiceByID($venueID) {
     global $db;
@@ -510,13 +505,40 @@ function insertVenueService($venueID, $serviceID) {
     $statement->bindValue(':servicePlace', $serviceID);
 
     $statement->execute();
-    //$imageId = $db->lastInsertId();
     $statement->closeCursor();
-
-    //return $imageId;
 }
 
-function joinTables($venueID) {
+function checkVenueService($venueID, $serviceID) {
+    global $db;
+    
+    $query = 'select * FROM venueservice
+              WHERE venueID = :venuePlace and
+              serviceID = :servicePlace';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':venuePlace', $venueID);
+    $statement->bindValue(':servicePlace', $serviceID);
+    $success = $statement->execute();
+    $statement->closeCursor();
+    
+    return $success;
+}
+
+function deleteServiceFromVenue($venueID, $serviceID) {
+    global $db;
+    
+    $query = 'DELETE FROM venueservice
+              WHERE venueID = :venuePlace and
+              serviceID = :servicePlace';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':venuePlace', $venueID);
+    $statement->bindValue(':servicePlace', $serviceID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function getServiceNamesFromVS($venueID) {
     global $db;
 
     $query = "SELECT * FROM venueservice v JOIN services s

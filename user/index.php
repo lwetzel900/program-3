@@ -144,7 +144,7 @@ switch ($action) {
         $venueID = filter_input(INPUT_POST, 'venue');
         $venueName = getVenueNameByID($venueID);
         $_SESSION['venue'] = $venueID;
-        $venueServices = joinTables($venueID);
+        $venueServices = getServiceNamesFromVS($venueID);
         include ('showServiceOptions.php');
         //header("Location: ?action=selectServices");
         break;

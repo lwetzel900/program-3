@@ -2,7 +2,6 @@
 $basedir= dirname(__DIR__);
 $basedir = explode("\\", $basedir);
 $basedir = array_pop($basedir);
-var_dump($basedir);
 //array_pop(explode("\\", dirname(__DIR__))) 
 ?>
 <!DOCTYPE html>

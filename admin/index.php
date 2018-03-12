@@ -58,7 +58,9 @@ switch ($action) {
 
     case 'deleteVenue':
         $venueID = filter_input(INPUT_POST, 'venueID');
+        $imageLocation = filter_input(INPUT_POST, 'imageLocation');
         deleteVenue($venueID);
+        unlink("../" . $imageLocation); //not sure if this is right
         header("Location: ?action=venueUpdate");
         break;
 
@@ -66,8 +68,14 @@ switch ($action) {
         $vName = filter_input(INPUT_POST, 'name');
         $vCity = filter_input(INPUT_POST, 'city');
         $vState = filter_input(INPUT_POST, 'state');
-        //$vPic = filter_input(INPUT_POST, 'pic');
-        $vPic = "default";
+
+        $place = 'venue';
+        $vPic = uploadPic($place);
+
+        if (empty($vPic)) {
+            $vPic = "images/venue/venueDefault.jpg";
+        }
+
         insertVenue($vName, $vCity, $vState, $vPic);
         header("Location: ?action=venueUpdate");
         break;
@@ -82,7 +90,7 @@ switch ($action) {
         $serviceID = filter_input(INPUT_POST, 'serviceID');
         $imageLocation = filter_input(INPUT_POST, 'imageLocation');
         deleteService($serviceID);
-        unlink("../" . $imageLocation);//not sure if this is right
+        unlink("../" . $imageLocation); //not sure if this is right
         header("Location: ?action=servicesUpdate");
         break;
 
@@ -96,23 +104,25 @@ switch ($action) {
         $desription = $_SESSION['service']['serviceDescription'];
         include('editService.php');
         break;
-    
+
     case 'updateService':
         $serviceID = filter_input(INPUT_POST, 'ID');
         $serviceType = filter_input(INPUT_POST, 'type');
         $serviceDescription = filter_input(INPUT_POST, 'description');
-        
+
         $place = 'service';
-        uploadPic($place);
-        
-        if(empty($imageURL)){
+        $servicePic = uploadPic($place);
+
+        if (empty($servicePic)) {
             $servicePic = $_SESSION['service']['servicePic'];
-        }else{
-            $servicePic = $imageURL;
         }
-        
+
         $venueID = filter_input(INPUT_POST, 'venueSelect');
         updateService($serviceID, $serviceType, $serviceDescription, $servicePic);
+        
+        if(checkVenueService($venueID, $serviceID)){
+            deleteServiceFromVenue($venueID, $serviceID);
+        }
         insertVenueService($venueID, $serviceID);
         header("Location: ?action=servicesUpdate");
         break;
@@ -123,16 +133,14 @@ switch ($action) {
         $sDescript = filter_input(INPUT_POST, 'description');
         //$sPic = filter_input(INPUT_POST, 'pic');
         $venueID = filter_input(INPUT_POST, 'venueSelect');
-        
+
         $place = 'service';
-        uploadPic($place);
-      
-        if(empty($imageURL)){
+        $sPic = uploadPic($place);
+
+        if (empty($sPic)) {
             $sPic = "images/service/serviceDefault.jpg";
-        }else{
-            $sPic = $imageURL;
         }
-        
+
         $serviceIDReturned = insertServices($sType, $sDescript, $sPic);
         insertVenueService($venueID, $serviceIDReturned);
         header("Location: ?action=servicesUpdate");
@@ -141,8 +149,8 @@ switch ($action) {
 //image views and actions
     case 'uploadImage':
         $place = 'gallery';
-        uploadPic($place);
-
+        $picPlace = uploadPic($place);
+        insertImage($picPlace);
         header("Location: ?action=adminWork");
         break;
 
@@ -150,7 +158,7 @@ switch ($action) {
         $imageID = filter_input(INPUT_POST, 'imageID');
         $imageLocation = filter_input(INPUT_POST, 'imageLocation');
         deleteFromImages($imageID);
-        unlink("../" . $imageLocation);//not sure if this is right
+        unlink("../" . $imageLocation); //not sure if this is right
         header("Location: ?action=adminWork");
         break;
 
@@ -164,30 +172,29 @@ switch ($action) {
 function uploadPic($place) {
     //taken from moodle
     if (isset($_FILES['image'])) {
-            $errors = array();
-            $file_name = $_FILES['image']['name'];
-            //$file_size = $_FILES['image']['size'];
-            $file_tmp = $_FILES['image']['tmp_name'];
-            //$file_type = $_FILES['image']['type'];
-            //$temp = $_FILES['image']['name'];
-            $temp = explode('.', $file_name);
-            $temp = end($temp);
-            $file_ext = strtolower($temp);
-            var_dump($_FILES);
+        $errors = array();
+        $file_name = $_FILES['image']['name'];
+        //$file_size = $_FILES['image']['size'];
+        $file_tmp = $_FILES['image']['tmp_name'];
+        //$file_type = $_FILES['image']['type'];
+        //$temp = $_FILES['image']['name'];
+        $temp = explode('.', $file_name);
+        $temp = end($temp);
+        $file_ext = strtolower($temp);
 
-            $extensions = array("jpeg", "jpg", "png", "gif");
+        $extensions = array("jpeg", "jpg", "png", "gif");
 
-            if (in_array($file_ext, $extensions) === false) {
-                $errors[] = "file extension not in whitelist: " . join(',', $extensions);
-            }
-
-            if (empty($errors) == true) {
-                move_uploaded_file($file_tmp, "../images/$place/" . $file_name);//not sure if this is right
-                $imageURL = "images/$place/" . $file_name;
-                insertImage($imageURL);
-                //echo "Success";
-            } else {
-                var_dump($errors);
-            }
+        if (in_array($file_ext, $extensions) === false) {
+            $errors[] = "file extension not in whitelist: " . join(',', $extensions);
         }
+
+        if (empty($errors) == true) {
+            move_uploaded_file($file_tmp, "../images/$place/" . $file_name); //not sure if this is right
+            $imageURL = "images/$place/" . $file_name;
+            //echo "Success";
+        } else {
+            var_dump($errors);
+        }
+    }
+    return $imageURL;
 }

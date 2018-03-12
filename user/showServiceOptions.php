@@ -3,16 +3,16 @@
     <br>
 
     <form id="aligned" action="" method="post">
-        <input type="hidden" name="action" value="selectServices"
+        <input type="hidden" name="action" value="selectServices">
 
-               <h2>Select a service</h2>
+        <h2>Select a service</h2>
 
         <table>
             <tr>
 
                 <th>Service Type</th>
                 <th>Description</th>
-                <!--<th>Picture</th>-->
+                <th>Picture</th>
                 <th>&nbsp;</th>
             </tr>
 
@@ -20,28 +20,20 @@
                 <tr>
                     <td><?php echo htmlspecialchars($service['serviceType']) ?></td>
                     <td><?php echo htmlspecialchars($service['serviceDescription']) ?></td>
-                    <!--<td><image src="<?php echo htmlspecialchars($service['servicePic']); ?>" height="120" width="180"</td>-->
-
-                    <td>
-                        <!--                    <form action="." method="post">
-                                                <input type="hidden" name="action" value="selectServices">
-                                                <input type="hidden" name="serviceID" value="<?php echo htmlspecialchars($service['serviceID']); ?>">-->
-                            <!--                        <input type="hidden" name="imageID"
-                                                       value="<?php echo htmlspecialchars($pic['imageID']); ?>">-->
-                        <input type="checkbox" name="services[]" value="<?php echo htmlspecialchars($service['serviceID']); ?>">
-                        <!--                    </form>-->
-                    </td>
+                    <td><image src="<?php echo htmlspecialchars('/' . $basedir . '/' . $service['servicePic']); ?>" 
+                               height="40" width="80"</td>
+                    <td><input type="checkbox" name="services[]" 
+                               value="<?php echo htmlspecialchars($service['serviceID']); ?>"></td>
                 </tr>
             <?php endforeach; ?>
         </table><br>
 
-        <label>&nbsp;</label><label>&nbsp;</label>
+        <label>&nbsp;</label>
         <input type="submit" value="Select">
     </form><br>
 
     <form id="aligned" class="cancel" action="." method="post">
-        <!--        <label>&nbsp;</label>-->
-        <input type="hidden" name="action" value="userProfile">
+        <input type="hidden" name="action" value="showOptions">
         <input type="submit" value="Cancel">
     </form><br>
 

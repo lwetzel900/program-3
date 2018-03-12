@@ -1,5 +1,7 @@
 <?php include '../view/header.php'; ?>
 <main>
+    <h2>Edit Services</h2><br>
+    
     <form action='' method='post' id="aligned" enctype="multipart/form-data">
         <input type='hidden' name='action' value='updateService'>
         <input type='hidden' name='ID' value='<?php echo htmlspecialchars($serviceID) ?>'>
