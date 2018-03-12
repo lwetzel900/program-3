@@ -17,7 +17,10 @@ body {
 main {
 
 }
-
+.invalid {
+    color: red;
+    font-weight: bold;
+}
 header {
     border-bottom: 2px solid black;
     padding: .5em 0;
@@ -60,7 +63,7 @@ form {
     margin-right: 1em;
     margin-bottom: .5em;
 }
-#aligned input, textarea {
+#aligned input, textarea, image {
     float: left;
     margin-bottom: .5em;
 }

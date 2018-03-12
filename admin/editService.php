@@ -1,14 +1,23 @@
 <?php include '../view/header.php'; ?>
 <main>
-    <form action='' method='post' id="aligned">
+    <form action='' method='post' id="aligned" enctype="multipart/form-data">
         <input type='hidden' name='action' value='updateService'>
         <input type='hidden' name='ID' value='<?php echo htmlspecialchars($serviceID) ?>'>
+        
         <label>Type: </label>
         <input type='text' name='type' value='<?php echo htmlspecialchars($type) ?>'><br>
 
         <label>Description: </label>
-        <textarea cols="21" rows="5" name='description' ><?php echo htmlspecialchars($desription) ?></textarea><br><br>
+        <textarea cols="21" rows="5" name='description' ><?php echo htmlspecialchars($desription) ?></textarea><br>
 
+        <label>Current picture:</label>
+        <image src="<?php echo htmlspecialchars('/' . $basedir . '/' . $pic); ?>" height="100" width="150"><br><br>
+        <input type="hidden" name="imageLocation"
+                               value="<?php echo htmlspecialchars($pic); ?>">
+        
+        <label>Upload New Picture:</label>
+        <input type="file" name="image" /><br>
+        
         <label>Currently offered at: </label>
         <textarea readonly="true"><?php foreach ($name as $n) : ?><?php echo htmlspecialchars($n) ?>, <?php endforeach; ?></textarea>          
         <br>

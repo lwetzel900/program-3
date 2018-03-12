@@ -130,17 +130,18 @@ function hasOneSpecialChar($password) {
 
 //*************************************************************************
 //admin validation
-//function isValidAddress($address) {
-//    $isGood = false;
-//    //$strlength = strlen($state);
-//    // I'm not sure why I have to but it keeps escaping my ending bracket if I use [\/\\]
-//    // adding the extra \ makes it work but none of the regex testers agree...
-//    // My best guess, while it shouldn't be doing it in a character class its translating \\ into \ which is escaping the next character
-//    if (strlen($address) < 2 &&
-//            preg_match("/[\/\\\<\>:\"|\?*\.]/", $address) === 0 &&
-//            preg_match("/^\s/", $address) === 0 &&
-//            preg_match("/\s$/", $address) === 0) {
-//        $isGood = true;
-//    }
-//    return $isGood;
-//}
+
+function isValidDescriction($descript) {
+    $isGood = false;
+    //$strlength = strlen($state);
+    // I'm not sure why I have to but it keeps escaping my ending bracket if I use [\/\\]
+    // adding the extra \ makes it work but none of the regex testers agree...
+    // My best guess, while it shouldn't be doing it in a character class its translating \\ into \ which is escaping the next character
+    if (strlen($$descript) > 2 && strlen($$descript) > 256 &&
+            preg_match("/[\/\\\<\>:\"|\?*\.]/", $$descript) === 0 &&
+            preg_match("/^\s/", $$descript) === 0 &&
+            preg_match("/\s$/", $$descript) === 0) {
+        $isGood = true;
+    }
+    return $isGood;
+}

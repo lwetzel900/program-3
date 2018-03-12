@@ -4,21 +4,19 @@
     <br><br>
     <table>
         <tr>
-            <!--<th>ID</th>-->
             <th>Picture</th>
             <th>&nbsp;</th>
         </tr>
 
         <?php foreach ($galleryImages as $pic) : ?>
             <tr>
-                <!--<td><?php echo htmlspecialchars($pic['imageID']) ?></td>-->
-                <td><image src="/<?php echo htmlspecialchars($basedir . '/' . $pic['galleryImages']); ?>" height="120" width="180"</td>
+                <td><image src="<?php echo htmlspecialchars('/' . $basedir . '/' . $pic['galleryImages']); ?>" height="120" width="180"></td>
 
                 <td><form action="." method="post">
                         <input type="hidden" name="action"
                                value="deleteImage">
                         <input type="hidden" name="imageLocation"
-                               value="<?php echo htmlspecialchars($pic['galleryImages']); ?>">
+                               value="<?php echo htmlspecialchars('/' . $pic['galleryImages']); ?>">
                         <input type="hidden" name="imageID"
                                value="<?php echo htmlspecialchars($pic['imageID']); ?>">
                         <input type="submit" value="Delete">

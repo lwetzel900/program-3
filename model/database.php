@@ -228,7 +228,7 @@ function getAllServices() {
 function getServiceByID($serviceID) {
     global $db;
 
-    $query = "select serviceType, serviceDescription from services
+    $query = "select serviceType, serviceDescription, servicePic from services
                         WHERE serviceID = :idPlace";
 
     $statement = $db->prepare($query);
@@ -534,7 +534,7 @@ function joinTables($venueID) {
 function VenueName($serviceID) {
     global $db;
 
-    $query = "SELECT name FROM venueservice vs JOIN venue v
+    $query = "SELECT distinct name FROM venueservice vs JOIN venue v
         ON vs.venueID = v.venueID WHERE serviceID = :servicePlace";
 
     $statement = $db->prepare($query);
@@ -565,3 +565,5 @@ function ServiceName($venueID) {
 
     return $services;
 }
+
+

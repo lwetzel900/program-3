@@ -53,7 +53,6 @@ switch ($action) {
 
 //venue views
     case 'venueUpdate':
-        //$allVenues = getAllVenues();
         include('venueUpdate.php');
         break;
 
@@ -81,7 +80,9 @@ switch ($action) {
 
     case 'deleteService':
         $serviceID = filter_input(INPUT_POST, 'serviceID');
+        $imageLocation = filter_input(INPUT_POST, 'imageLocation');
         deleteService($serviceID);
+        unlink("../" . $imageLocation);//not sure if this is right
         header("Location: ?action=servicesUpdate");
         break;
 
@@ -91,6 +92,7 @@ switch ($action) {
         var_dump($name);
         $_SESSION['service'] = getServiceByID($serviceID);
         $type = $_SESSION['service']['serviceType'];
+        $pic = $_SESSION['service']['servicePic'];
         $desription = $_SESSION['service']['serviceDescription'];
         include('editService.php');
         break;
@@ -99,7 +101,16 @@ switch ($action) {
         $serviceID = filter_input(INPUT_POST, 'ID');
         $serviceType = filter_input(INPUT_POST, 'type');
         $serviceDescription = filter_input(INPUT_POST, 'description');
-        $servicePic = "default";
+        
+        $place = 'service';
+        uploadPic($place);
+        
+        if(empty($imageURL)){
+            $servicePic = $_SESSION['service']['servicePic'];
+        }else{
+            $servicePic = $imageURL;
+        }
+        
         $venueID = filter_input(INPUT_POST, 'venueSelect');
         updateService($serviceID, $serviceType, $serviceDescription, $servicePic);
         insertVenueService($venueID, $serviceID);
@@ -112,7 +123,16 @@ switch ($action) {
         $sDescript = filter_input(INPUT_POST, 'description');
         //$sPic = filter_input(INPUT_POST, 'pic');
         $venueID = filter_input(INPUT_POST, 'venueSelect');
-        $sPic = "default";
+        
+        $place = 'service';
+        uploadPic($place);
+      
+        if(empty($imageURL)){
+            $sPic = "images/service/serviceDefault.jpg";
+        }else{
+            $sPic = $imageURL;
+        }
+        
         $serviceIDReturned = insertServices($sType, $sDescript, $sPic);
         insertVenueService($venueID, $serviceIDReturned);
         header("Location: ?action=servicesUpdate");
@@ -120,8 +140,30 @@ switch ($action) {
 
 //image views and actions
     case 'uploadImage':
-        //taken from moodle
-        if (isset($_FILES['image'])) {
+        $place = 'gallery';
+        uploadPic($place);
+
+        header("Location: ?action=adminWork");
+        break;
+
+    case 'deleteImage';
+        $imageID = filter_input(INPUT_POST, 'imageID');
+        $imageLocation = filter_input(INPUT_POST, 'imageLocation');
+        deleteFromImages($imageID);
+        unlink("../" . $imageLocation);//not sure if this is right
+        header("Location: ?action=adminWork");
+        break;
+
+    case'logout':
+        session_unset();
+        header("Location: ..");
+        exit();
+        break;
+}
+
+function uploadPic($place) {
+    //taken from moodle
+    if (isset($_FILES['image'])) {
             $errors = array();
             $file_name = $_FILES['image']['name'];
             //$file_size = $_FILES['image']['size'];
@@ -131,7 +173,6 @@ switch ($action) {
             $temp = explode('.', $file_name);
             $temp = end($temp);
             $file_ext = strtolower($temp);
-
             var_dump($_FILES);
 
             $extensions = array("jpeg", "jpg", "png", "gif");
@@ -141,28 +182,12 @@ switch ($action) {
             }
 
             if (empty($errors) == true) {
-                move_uploaded_file($file_tmp, "images/gallery/" . $file_name);
-                $imageURL = "images/gallery/" . $file_name;
+                move_uploaded_file($file_tmp, "../images/$place/" . $file_name);//not sure if this is right
+                $imageURL = "images/$place/" . $file_name;
                 insertImage($imageURL);
                 //echo "Success";
             } else {
                 var_dump($errors);
             }
         }
-        header("Location: ?action=adminWork");
-        break;
-
-    case 'deleteImage';
-        $imageID = filter_input(INPUT_POST, 'imageID');
-        $imageLocation = filter_input(INPUT_POST, 'imageLocation');
-        deleteFromImages($imageID);
-        unlink($imageLocation);
-        header("Location: ?action=adminWork");
-        break;
-
-    case'logout':
-        session_unset();
-        header("Location: ..");
-        exit();
-        break;
 }

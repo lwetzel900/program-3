@@ -20,14 +20,14 @@ switch ($action) {
 
     case 'register':
         $errorMessage = "";
-//        $firstName = "";
-//        $lastName = "";
-//        $email = "";
-//        $address = "";
-//        $city = "";
-//        $zip = "";
-//        $phone = "";
-//        $password = "";
+        $firstName = "";
+        $lastName = "";
+        $email = "";
+        $address = "";
+        $city = "";
+        $zip = "";
+        $phone = "";
+        $password = "";
         include('registration.php');
         break;
     case 'addUser':
@@ -42,7 +42,7 @@ switch ($action) {
         $password = filter_input(INPUT_POST, 'password');
 
         switch (TRUE) {
-            case (emailExists($email)):
+            case (!emailExists($email)):
                 $errorMessage = 'Email is Already Registered';
                 include ('registration.php');
                 break;
