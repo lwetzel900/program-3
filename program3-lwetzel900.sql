@@ -21,7 +21,10 @@ SET time_zone = "+00:00";
 --
 -- Database: `program3-lwetzel900`
 --
-
+Drop DATABASE IF EXISTS `wedding`;
+Drop DATABASE IF EXISTS `program3-lwetzel900`;
+CREATE DATABASE IF NOT EXISTS `program3-lwetzel900` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `program3-lwetzel900`;
 -- --------------------------------------------------------
 
 --
