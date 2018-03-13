@@ -13,3 +13,5 @@
 | Progress               | 5     | Demonstrate progress on 2/22 and 3/1                                                                                              |
 
 Usernames and passwords for demo accounts:
+email lwetzel90@gmail.com password Romeoray02
+email jon@jonson.com  password  Romeoray02
