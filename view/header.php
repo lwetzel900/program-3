@@ -11,8 +11,6 @@ $basedir = array_pop($basedir);
     <title>Summerstar Creations</title>
     <link rel="stylesheet" type="text/css" href="/<?php echo htmlspecialchars($basedir) ?>/main.css" >
 </head>
-<?php var_dump($_SESSION)?>
-
 <!-- the body section -->
 <body>
 <header>

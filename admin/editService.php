@@ -21,24 +21,23 @@
         <input type="file" name="image" /><br>
         
         <label>Currently offered at: </label>
-        <textarea readonly="true"><?php foreach ($name as $n) : ?><?php echo htmlspecialchars($n) ?>, <?php endforeach; ?></textarea>          
+        <textarea cols="21" rows="3" readonly="true"><?php foreach ($name as $n) : ?><?php echo htmlspecialchars($n) ?>, <?php endforeach; ?></textarea>          
         <br>
 
         <label>Venue Offered: </label>
-        <select name="venueSelect">
+        <select size="2" name="venueSelect">
             <?php foreach ($allVenues as $ven) : ?>
                 <option value="<?php echo htmlspecialchars($ven['venueID']) ?>">
                     <?php echo htmlspecialchars($ven['name']) ?></option>
             <?php endforeach; ?>
-        </select><span>NOTE!!!! Maybe make this multiple select</span><br>
+        </select><br><br>
 
         <label>&nbsp;</label>
         <input type="submit" value="Update">
-    </form>
+    </form><br>
     
     <form id="aligned" class="cancel" action="." method="post">
-<!--        <label>&nbsp;</label>-->
-        <input type="hidden" name="action" value="adminWork">
+        <input type="hidden" name="action" value="servicesUpdate">
         <input type="submit" value="Cancel">
     </form><br>
 

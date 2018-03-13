@@ -68,11 +68,11 @@ form {
     width: 8em;
     margin-top: .25em;
     margin-right: 1em;
-    margin-bottom: .5em;
+    margin-bottom: 1em;
 }
 #aligned input, textarea, image {
     float: left;
-    margin-bottom: .5em;
+    margin-bottom: 1em;
 }
 #aligned input[text] {
     width: 15em;

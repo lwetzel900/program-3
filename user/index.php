@@ -1,5 +1,5 @@
 <?php
-
+session_set_cookie_params(6000, '/');
 session_start();
 require_once('../model/database.php');
 require_once ('../model/valid.php');
@@ -98,7 +98,6 @@ switch ($action) {
     case 'userLogin':
         $email = filter_input(INPUT_POST, 'email');
         $password = filter_input(INPUT_POST, 'password');
-        var_dump($email);
         if ($email != NULL && emailExists($email)) {
             $storedPassword = getHashedPassword($email);
         } else {
@@ -150,8 +149,6 @@ switch ($action) {
         break;
 
     case'selectServices':
-
-        var_dump($venueServices);
         $fName = $_SESSION['user']['fName'];
         $lName = $_SESSION['user']['lName'];
         $userID = $_SESSION['user']['userID'];

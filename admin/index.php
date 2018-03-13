@@ -1,5 +1,5 @@
 <?php
-
+session_set_cookie_params(6000, '/');
 session_start();
 require_once('../model/database.php');
 require_once ('../model/valid.php');
@@ -97,7 +97,6 @@ switch ($action) {
     case 'editServiceView':
         $serviceID = filter_input(INPUT_POST, 'serviceID');
         $name = VenueName($serviceID);
-        var_dump($name);
         $_SESSION['service'] = getServiceByID($serviceID);
         $type = $_SESSION['service']['serviceType'];
         $pic = $_SESSION['service']['servicePic'];
@@ -117,13 +116,14 @@ switch ($action) {
             $servicePic = $_SESSION['service']['servicePic'];
         }
 
-        $venueID = filter_input(INPUT_POST, 'venueSelect');
         updateService($serviceID, $serviceType, $serviceDescription, $servicePic);
-        
-        if(checkVenueService($venueID, $serviceID)){
+
+        $venueID = filter_input(INPUT_POST, 'venueSelect');
+        if (checkVenueService($venueID, $serviceID)) {
             deleteServiceFromVenue($venueID, $serviceID);
         }
         insertVenueService($venueID, $serviceID);
+
         header("Location: ?action=servicesUpdate");
         break;
 
@@ -193,7 +193,7 @@ function uploadPic($place) {
             $imageURL = "images/$place/" . $file_name;
             //echo "Success";
         } else {
-            var_dump($errors);
+            //var_dump($errors);
         }
     }
     return $imageURL;
