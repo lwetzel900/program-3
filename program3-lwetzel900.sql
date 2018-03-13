@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 
 --
 -- Database: `program3-lwetzel900`
---
+DROP DATABASE IF EXISTS `wedding`;
 DROP DATABASE IF EXISTS `program3-lwetzel900`;
 CREATE DATABASE `program3-lwetzel900`;
 USE `program3-lwetzel900`;
@@ -95,14 +95,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`userID`, `fName`, `lName`, `email`, `address`, `city`, `zip`, `phone`, `password`) VALUES
 (1, 'Loren', 'Wetzel', 'lwetzel90@gmail.com', '609 4th Ave', 'Nebraska City', 68410, '4028817220', '$2y$12$33CoiE0rHEZR/Fk.qheCg.S0718wisKuyZweG4ZpWzjp37781/arG'),
 (2, 'jonny', 'jonson', 'jon@jonson.com', '156 johnnyway', 'jonsville', 68450, '7896541523', '$2y$12$nIjUEHtRovHmlPhqIRm9b.53t8xb9o0YyJ8z7MFGhjm7K0ek9gb2u'),
-(3, 'randy', 'randson', 'some@thing.com', '123 rtsd', 'Randville', 10212, '789-654-1478', '$2y$12$gZuU3nIegtNPgtn0RZko7eKpFRh7BzTSlEYBwPWaWU5YtroinLYDm'),
-(4, 'billy', 'billyson', 'billy@billy.com', '234 1st ave.', 'Billyville', 98563, '410-879-9632', '$2y$12$N2quYbZ1HU/j8vJh65m5z.QUh4Sy7uaciOi9EaqpES8Ub8hjktMMq'),
-(5, 'qwe', 'rty.', 'qwe@rty.com', '123 wert ', 'Qwerty City', 78987, '123-456-7890', '$2y$12$9iWsac6OcRZ3RarjnQEHn.fjquYx8vrteTPzv325qKGafdEXmu8RO'),
-(6, 'asdf2', 'adgf', 'asfd@sdfads.com', 'agf', 'asdf', 12345, '123-456-7890', '$2y$12$de0yFqEz8lL4OdW4.WudWuqSPIovUwIhuv9MaTmuCij1KJZrQieaq'),
-(7, '', '', '', '', '', 0, '', '$2y$12$kpEb.BmNncqjOgmliVPJHe.N8EdtbAPj4LlkMil1Rnt/MrlGnisOW'),
-(19, 'agfdshaf', 'afdhafh', 'sgfhGD@xgzgf.com', '123 fsdh', 'afdg', 78965, '789-456-7896', '$2y$12$l9VjXBT8NOeDcTUqczb7PO9EyQLaUWUO14oXe9jvzTZZtk0B67fM6'),
-(20, 'ahsdjfg', 'ahdfgl', 'get@some.com', '123 kjfagndskj', 'adfsadf', 12345, '789-654-1230', '$2y$12$n5aymuRtAB9kzJSEMqL3j.4ClHhTN8j6LU4yaDlIAJOcsK4Tjywwu'),
-(21, 'fdah', 'fadh', 'fgshtth@zgfh.com', '123 s fdgh', 'adg', 56786, '789-456-7898', '$2y$12$FuLHCGE1tboZOseeODfgfuGUhkHtuOIowBuiDCDFwsRh1ykyA44Vi');
+
 
 -- --------------------------------------------------------
 
