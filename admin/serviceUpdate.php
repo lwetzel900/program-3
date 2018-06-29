@@ -49,7 +49,8 @@
                 <option value="<?php echo htmlspecialchars($ven['venueID']) ?>">
                     <?php echo htmlspecialchars($ven['name']) ?></option>
             <?php endforeach; ?>
-        </select><span>NOTE!!!! Maybe make this multiple select</span><br>
+        </select><br>
+        <!--<span>NOTE!!!! Maybe make this multiple select</span><br>-->
 
 
         <label>Picture:</label>
