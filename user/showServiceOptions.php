@@ -1,4 +1,7 @@
 <?php include '../view/header.php'; ?>
+<?php if(!isset($_SESSION)){
+    header("Location: .");
+}?>
 <main>
     <br>
 

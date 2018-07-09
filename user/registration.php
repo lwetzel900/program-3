@@ -1,4 +1,7 @@
 <?php include '../view/header.php'; ?>
+<?php if(!isset($_SESSION)){
+    header("Location: .");
+}?>
 <body>
     <p>Please register.</p>
     <h2 class="invalid"><?php echo htmlspecialchars($errorMessage) ?></h2>

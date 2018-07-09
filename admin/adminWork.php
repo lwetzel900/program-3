@@ -1,4 +1,7 @@
 <?php include '../view/header.php'; ?>
+<?php if(!isset($_SESSION)){
+    header("Location: .");
+}?>
 <main>
     <p>Here you can upload or delete images from the main gallery.</p>
     <br><br>
