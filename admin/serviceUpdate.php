@@ -1,7 +1,9 @@
 <?php include '../view/header.php'; ?>
-<?php if(!isset($_SESSION)){
+<?php
+if (!isset($_SESSION)) {
     header("Location: .");
-}?>
+}
+?>
 <main>
     <br>
     <table>
@@ -17,7 +19,7 @@
             <tr>
                 <td><?php echo htmlspecialchars($service['serviceType']) ?></td>
                 <td><?php echo htmlspecialchars($service['serviceDescription']) ?></td>
-                <td><image src="<?php echo htmlspecialchars('/' . $basedir . '/' . $service['servicePic']); ?>" height="40" width="80"</td>
+                <td><image src="<?php echo htmlspecialchars('/' . $basedir . '/' . $service['servicePic']); ?>" height="40" width="80"></td>
 
                 <td><form action="." method="post">
                         <input type="hidden" name="action" value="deleteService">
@@ -55,16 +57,13 @@
         </select><br>
         <!--<span>NOTE!!!! Maybe make this multiple select</span><br>-->
 
-
         <label>Picture:</label>
         <input type="file" name="image" /><br>
         <br>
 
         <label>&nbsp;</label>
         <input type="submit" value="Add Service"><br>
-
     </form>
-
     <p><a href=".?action=adminWork">Admin Home</a> </p>
     <p><a href=".?action=logout">Logout</a></p>
 </main>

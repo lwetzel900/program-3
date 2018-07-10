@@ -1,16 +1,18 @@
 <?php include '../view/header.php'; ?>
-<?php if(!isset($_SESSION)){
+<?php
+if (!isset($_SESSION)) {
     header("Location: .");
-}?>
+}
+?>
 <body>
     <p>Please register.</p>
     <h2 class="invalid"><?php echo htmlspecialchars($errorMessage) ?></h2>
     <form action="." method="post" id="aligned">
         <input type="hidden" name="action" value="addUser">
-        
+
         <label for="firstName">First Name: </label>
         <input type="text" name="firstName" value="<?php echo htmlspecialchars($firstName) ?>"><br>
-        
+
         <label for="lastName">Last Name: </label>
         <input type="text" name="lastName" value="<?php echo htmlspecialchars($lastName) ?>"><br>
 

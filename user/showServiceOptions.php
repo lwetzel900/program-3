@@ -1,18 +1,17 @@
 <?php include '../view/header.php'; ?>
-<?php if(!isset($_SESSION)){
+<?php
+if (!isset($_SESSION)) {
     header("Location: .");
-}?>
+}
+?>
 <main>
     <br>
 
     <form id="aligned" action="" method="post">
         <input type="hidden" name="action" value="selectServices">
-
         <h2>Select a service</h2>
-
         <table>
             <tr>
-
                 <th>Service Type</th>
                 <th>Description</th>
                 <th>Picture</th>
@@ -24,7 +23,7 @@
                     <td><?php echo htmlspecialchars($service['serviceType']) ?></td>
                     <td><?php echo htmlspecialchars($service['serviceDescription']) ?></td>
                     <td><image src="<?php echo htmlspecialchars('/' . $basedir . '/' . $service['servicePic']); ?>" 
-                               height="40" width="80"</td>
+                               height="40" width="80"></td>
                     <td><input type="checkbox" name="services[]" 
                                value="<?php echo htmlspecialchars($service['serviceID']); ?>"></td>
                 </tr>
